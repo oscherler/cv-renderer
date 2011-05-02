@@ -112,7 +112,7 @@ filter_proc = java net.sourceforge.xmlresume.filter.Filter -in $(in) -out $(out)
 .PHONY: all html text fo pdf clean 13x-140
 
 default: pdf
-all: html text fo pdf
+all: cv-fr.html cv-fr.txt cv-fr.fo cv-fr.pdf cv-en.html cv-en.txt cv-en.fo cv-en.pdf
 html: $(resume).html
 text: $(resume).txt
 fo: $(resume).fo
@@ -121,55 +121,67 @@ pdf: $(resume).pdf
 rtf: $(resume).rtf
 filter: $(resume)-filtered.xml
 
-clean:
-	rm -f $(resume).html
-	rm -f $(resume).txt
-	rm -f $(resume).fo
-	rm -f $(resume).pdf
-	rm -f $(resume).rtf
-	rm -f $(resume)-filtered.xml
-	rm -f $(resume)-filtered.html
-	rm -f $(resume)-filtered.txt
-	rm -f $(resume)-filtered.pdf
-	rm -f $(resume)-filtered.fo
-	rm -f $(resume)-filtered.rtf
+cv-en.fo: country = uk
+cv-en.pdf: country = uk
+cv-en.txt: country = uk
+cv-en.html: country = uk
 
-$(resume).html: in = $(resume).xml
-$(resume).html: out = $(resume).html
-$(resume).html: xsl = $(html_style)
-$(resume).html: $(resume).xml
+cv-fr.fo: country = fr
+cv-fr.pdf: country = fr
+cv-fr.txt: country = fr
+cv-fr.html: country = fr
+
+clean: clean-cv-fr clean-cv-en
+
+clean-%:
+	rm -f $*.html
+	rm -f $*.txt
+	rm -f $*.fo
+	rm -f $*.pdf
+	rm -f $*.rtf
+	rm -f $*-filtered.xml
+	rm -f $*-filtered.html
+	rm -f $*-filtered.txt
+	rm -f $*-filtered.pdf
+	rm -f $*-filtered.fo
+	rm -f $*-filtered.rtf
+
+%.html: in = $*.xml
+%.html: out = $*.html
+%.html: xsl = $(html_style)
+%.html: %.xml
 	$(xsl_proc)
 
-$(resume).txt: in = $(resume).xml
-$(resume).txt: out = $(resume).txt
-$(resume).txt: xsl = $(text_style)
-$(resume).txt: $(resume).xml
+%.txt: in = $*.xml
+%.txt: out = $*.txt
+%.txt: xsl = $(text_style)
+%.txt: %.xml
 	$(xsl_proc)
 
-$(resume).fo: in = $(resume).xml
-$(resume).fo: out = $(resume).fo
-$(resume).fo: xsl = $(fo_style)
-$(resume).fo: $(resume).xml
+%.fo: in = $*.xml
+%.fo: out = $*.fo
+%.fo: xsl = $(fo_style)
+%.fo: %.xml
 	$(xsl_proc)
 
-$(resume).pdf: in = $(resume).fo
-$(resume).pdf: out = $(resume).pdf
-$(resume).pdf: $(resume).fo
+%.pdf: in = $*.fo
+%.pdf: out = $*.pdf
+%.pdf: %.fo
 	$(pdf_proc)
 
-$(resume).rtf: in = $(resume).fo
-$(resume).rtf: out = $(resume).rtf
-$(resume).rtf: $(resume).fo
+%.rtf: in = $*.fo
+%.rtf: out = $*.rtf
+%.rtf: %.fo
 	$(rtf_proc)
 
-$(resume)-140.xml: in = $(resume).xml
-$(resume)-140.xml: out = $(resume)-140.xml
-$(resume)-140.xml: xsl = $(upgrade_13x_140_style)
-$(resume)-140.xml: $(resume).xml
+%-140.xml: in = $*.xml
+%-140.xml: out = $*-140.xml
+%-140.xml: xsl = $(upgrade_13x_140_style)
+%-140.xml: %.xml
 	$(xsl_proc)
 
-$(resume)-filtered.xml: in = $(resume).xml
-$(resume)-filtered.xml: out = $(resume)-filtered.xml
-$(resume)-filtered.xml: $(resume).xml
+%-filtered.xml: in = $*.xml
+%-filtered.xml: out = $*-filtered.xml
+%-filtered.xml: %.xml
 	$(filter_proc)
-	$(make) all resume=$(resume)-filtered
+	$(make) all resume=$*-filtered
