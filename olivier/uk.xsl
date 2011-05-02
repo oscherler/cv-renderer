@@ -9,7 +9,7 @@
 
   <xsl:param name="address.word">Address</xsl:param>
   <xsl:param name="nationality.word">Nationality</xsl:param>
-  <xsl:param name="birth.word">Date or birth</xsl:param>
+  <xsl:param name="birth.word">Date of birth</xsl:param>
 
   <xsl:param name="phone.word">Phone</xsl:param>
   <xsl:param name="fax.word">Fax</xsl:param>

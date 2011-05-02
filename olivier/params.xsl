@@ -176,7 +176,7 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
   <xsl:param name="bullet.space">1.0em</xsl:param>
 
   <xsl:param name="header.name.font.style">normal</xsl:param>
-  <xsl:param name="header.name.font.weight">bold</xsl:param>
+  <xsl:param name="header.name.font.weight">600</xsl:param>
   <xsl:param name="header.name.font.size" select="$body.font.size"/>
 
   <xsl:param name="header.item.font.style">normal</xsl:param>
@@ -200,16 +200,16 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
   <!-- Used for copyright notice and "last modified" date -->
   <xsl:param name="fineprint.font.size">8pt</xsl:param>
 
-  <xsl:param name="emphasis.font.weight">bold</xsl:param>
+  <xsl:param name="emphasis.font.weight">600</xsl:param>
   <xsl:param name="citation.font.style">italic</xsl:param>
   <xsl:param name="url.font.family">monospace</xsl:param>
 
   <xsl:param name="jobtitle.font.style">normal</xsl:param>
-  <xsl:param name="jobtitle.font.weight">bold</xsl:param>
+  <xsl:param name="jobtitle.font.weight">600</xsl:param>
 
   <!-- Used on degree major and level -->
   <xsl:param name="degree.font.style">normal</xsl:param>
-  <xsl:param name="degree.font.weight">bold</xsl:param>
+  <xsl:param name="degree.font.weight">600</xsl:param>
 
   <xsl:param name="referee-name.font.style">italic</xsl:param>
   <xsl:param name="referee-name.font.weight">normal</xsl:param>
@@ -217,11 +217,11 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
   <xsl:param name="employer.font.style">italic</xsl:param>
   <xsl:param name="employer.font.weight">normal</xsl:param>
 
-  <xsl:param name="job-period.font.style">italic</xsl:param>
+  <xsl:param name="job-period.font.style">normal</xsl:param>
   <xsl:param name="job-period.font.weight">normal</xsl:param>
 
   <!-- Used for "Projects" and "Achievements" -->
-  <xsl:param name="job-subheading.font.style">italic</xsl:param>
+  <xsl:param name="job-subheading.font.style">normal</xsl:param>
   <xsl:param name="job-subheading.font.weight">normal</xsl:param>
 
   <xsl:param name="skillset-title.font.style">italic</xsl:param>
@@ -238,5 +238,8 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
   <xsl:param name="gpa-preamble.font.weight">normal</xsl:param>
 
   <xsl:param name="superscript.size">7pt</xsl:param>
+
+  <xsl:param name="job.list.indent">1.3cm</xsl:param>
+  <xsl:param name="project.list.indent">1.5cm</xsl:param>
 
 </xsl:stylesheet>

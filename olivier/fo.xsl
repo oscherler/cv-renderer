@@ -110,6 +110,11 @@
 	</fo:table>
   </xsl:template>
 
+  <!-- Format a period. -->
+  <xsl:template match="r:period">
+    <xsl:apply-templates select="r:from"/> – <xsl:apply-templates select="r:to"/>
+  </xsl:template>
+
   <!-- Named template to format a single contact field *SE* -->
   <!-- Don't print the label if the field value is empty *SE* -->
   <xsl:template name="contact-label">
@@ -226,6 +231,128 @@
         <xsl:apply-templates/>
       </xsl:with-param>
     </xsl:call-template>
+  </xsl:template>
+
+  <!-- Format the history with the heading "Employment History". -->
+  <xsl:template match="r:history">
+    <xsl:call-template name="heading">
+      <xsl:with-param name="text"><xsl:value-of select="$history.word"/></xsl:with-param>
+    </xsl:call-template>
+    <!--fo:list-block provisional-distance-between-starts="3cm"-->
+      <xsl:apply-templates/>
+    <!-- /fo:list-block -->
+  </xsl:template>
+
+  <!-- Format a single job. -->
+  <xsl:template match="r:job">
+    <fo:block
+      font-style="{$job-period.font.style}"
+      font-weight="{$job-period.font.weight}">
+      <xsl:apply-templates select="r:date|r:period"/>
+    </fo:block>
+	<fo:block start-indent="{$job.list.indent}">
+	  <fo:block keep-with-next="always"
+		space-before="6pt" space-after="6pt">
+		<fo:inline font-style="{$jobtitle.font.style}" font-weight="{$jobtitle.font.weight}">
+		  <xsl:apply-templates select="r:jobtitle"/>
+		</fo:inline>
+		<xsl:if test="r:employer">
+		  <xsl:text>, </xsl:text>
+		  <xsl:apply-templates select="r:employer"/>
+		</xsl:if>
+		<xsl:if test="r:location">
+		  <xsl:text>, </xsl:text>
+		  <xsl:apply-templates select="r:location"/>
+		</xsl:if>
+	  </fo:block>
+	  <xsl:if test="r:description">
+		<fo:block
+		  provisional-distance-between-starts="0.5em">
+		  <xsl:apply-templates select="r:description"/>
+		</fo:block>
+	  </xsl:if>
+	  <xsl:if test="r:projects/r:project">
+		<fo:block>
+		  <fo:block
+			  keep-with-next="always"
+			  font-style="{$job-subheading.font.style}"
+			  font-weight="{$job-subheading.font.weight}">
+			<xsl:value-of select="$projects.word"/><xsl:value-of select="$label.colon"/>
+		  </fo:block>
+		  <xsl:apply-templates select="r:projects"><xsl:with-param name="indent" select="$job.list.indent"/></xsl:apply-templates>
+		</fo:block>
+	  </xsl:if>
+	  <xsl:if test="r:achievements/r:achievement">
+		<fo:block>
+		  <fo:block
+			  keep-with-next="always"
+			  font-style="{$job-subheading.font.style}"
+			  font-weight="{$job-subheading.font.weight}">
+			<xsl:value-of select="$achievements.word"/><xsl:value-of select="$label.colon"/>
+		  </fo:block>
+		  <xsl:apply-templates select="r:achievements"/>
+		</fo:block>
+	  </xsl:if>
+    </fo:block>
+  </xsl:template>
+
+  <!-- Format the projects section -->
+  <xsl:template match="r:projects">
+    <xsl:param name="indent" select="$body.indent"/>
+    <fo:list-block space-after="{$para.break.space}" start-indent="{$project.list.indent}"
+      provisional-distance-between-starts="{$bullet.space}"
+      provisional-label-separation="{$bullet.space}">
+      <xsl:apply-templates select="r:project"/>
+    </fo:list-block>
+  </xsl:template>
+
+  <!-- Format a single project as a bullet -->
+  <xsl:template match="r:project">
+    <xsl:call-template name="bulletListItem">
+      <xsl:with-param name="indent" select="$project.list.indent"/>
+      <xsl:with-param name="text">
+        <xsl:if test="@title">
+          <xsl:value-of select="@title"/>
+          <xsl:value-of select="$title.separator"/>
+        </xsl:if>
+	<xsl:apply-templates/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <!-- Format the achievements section as a bullet list *SE* -->
+  <xsl:template match="r:achievements">
+    <fo:list-block space-after="{$para.break.space}" start-indent="{$project.list.indent}"
+      provisional-distance-between-starts="{$bullet.space}"
+      provisional-label-separation="{$bullet.space}">
+      <xsl:for-each select="r:achievement">
+        <xsl:call-template name="bulletListItem"><xsl:with-param name="indent" select="$project.list.indent"/></xsl:call-template>
+      </xsl:for-each>
+    </fo:list-block>
+  </xsl:template>
+
+  <!-- Format a single bullet and its text -->
+  <xsl:template name="bulletListItem">
+    <xsl:param name="indent" select="$body.indent"/>
+    <xsl:param name="text"/>
+    <fo:list-item>
+      <fo:list-item-label start-indent="{$indent}"
+        end-indent="label-end()">
+        <fo:block><xsl:value-of select="$bullet.glyph"/></fo:block>
+      </fo:list-item-label>
+      <fo:list-item-body start-indent="body-start()">
+        <fo:block>
+          <xsl:choose>
+            <xsl:when test="string-length($text) > 0">
+              <xsl:copy-of select="$text"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </fo:block>
+      </fo:list-item-body>
+    </fo:list-item>
   </xsl:template>
 
 </xsl:stylesheet>

@@ -29,6 +29,9 @@
   <xsl:param name="date.second.suffix"></xsl:param>
   <xsl:param name="date.third.suffix"></xsl:param>
 
+  <xsl:param name="achievements.word">Réalisations</xsl:param>
+  <xsl:param name="projects.word">Projets</xsl:param>
+
   <!-- Format a date. -->
   <xsl:template match="r:date" mode="numeric">
     <xsl:apply-templates select="r:dayOfMonth"/>
