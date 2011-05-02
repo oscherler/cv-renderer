@@ -202,7 +202,7 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
 
   <xsl:param name="emphasis.font.weight">600</xsl:param>
   <xsl:param name="citation.font.style">italic</xsl:param>
-  <xsl:param name="url.font.family">monospace</xsl:param>
+  <xsl:param name="url.font.family">Baskerville</xsl:param>
 
   <xsl:param name="jobtitle.font.style">normal</xsl:param>
   <xsl:param name="jobtitle.font.weight">600</xsl:param>
@@ -241,5 +241,8 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
 
   <xsl:param name="job.list.indent">1.3cm</xsl:param>
   <xsl:param name="project.list.indent">1.5cm</xsl:param>
+
+  <xsl:param name="project.title.font.style">normal</xsl:param>
+  <xsl:param name="project.title.font.weight">600</xsl:param>
 
 </xsl:stylesheet>

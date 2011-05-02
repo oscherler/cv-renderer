@@ -233,16 +233,6 @@
     </xsl:call-template>
   </xsl:template>
 
-  <!-- Format the history with the heading "Employment History". -->
-  <xsl:template match="r:history">
-    <xsl:call-template name="heading">
-      <xsl:with-param name="text"><xsl:value-of select="$history.word"/></xsl:with-param>
-    </xsl:call-template>
-    <!--fo:list-block provisional-distance-between-starts="3cm"-->
-      <xsl:apply-templates/>
-    <!-- /fo:list-block -->
-  </xsl:template>
-
   <!-- Format a single job. -->
   <xsl:template match="r:job">
     <fo:block
@@ -264,6 +254,7 @@
 		  <xsl:text>, </xsl:text>
 		  <xsl:apply-templates select="r:location"/>
 		</xsl:if>
+		<xsl:text>.</xsl:text>
 	  </fo:block>
 	  <xsl:if test="r:description">
 		<fo:block
@@ -312,8 +303,14 @@
       <xsl:with-param name="indent" select="$project.list.indent"/>
       <xsl:with-param name="text">
         <xsl:if test="@title">
-          <xsl:value-of select="@title"/>
-          <xsl:value-of select="$title.separator"/>
+          <fo:inline
+            font-style="{$project.title.font.style}"
+			font-weight="{$project.title.font.weight}"><xsl:value-of select="@title"/>
+			<xsl:choose>
+			  <xsl:when test="string-length(.) &gt; 0"><xsl:value-of select="$title.separator"/></xsl:when>
+			  <xsl:otherwise>.</xsl:otherwise>
+			</xsl:choose>
+			</fo:inline>
         </xsl:if>
 	<xsl:apply-templates/>
       </xsl:with-param>
@@ -329,6 +326,56 @@
         <xsl:call-template name="bulletListItem"><xsl:with-param name="indent" select="$project.list.indent"/></xsl:call-template>
       </xsl:for-each>
     </fo:list-block>
+  </xsl:template>
+
+  <!-- Format a single degree -->
+  <xsl:template match="r:degree">
+    <fo:block
+      font-style="{$job-period.font.style}"
+      font-weight="{$job-period.font.weight}">
+      <xsl:apply-templates select="r:date|r:period"/>
+    </fo:block>
+	<fo:block start-indent="{$job.list.indent}">
+	  <fo:block keep-with-next="always"
+		space-before="6pt" space-after="6pt">
+        <fo:inline
+            font-style="{$degree.font.style}"
+            font-weight="{$degree.font.weight}">
+          <xsl:apply-templates select="r:level"/>
+          <xsl:if test="r:major">
+            <xsl:text> </xsl:text>
+            <xsl:value-of select="$in.word"/>
+            <xsl:text> </xsl:text>
+            <xsl:apply-templates select="r:major"/>
+          </xsl:if>
+        </fo:inline>
+        <xsl:apply-templates select="r:minor"/>
+        <xsl:if test="r:institution">
+          <xsl:text>, </xsl:text>
+          <xsl:apply-templates select="r:institution"/>
+        </xsl:if>
+        <xsl:if test="r:location">
+          <xsl:text>, </xsl:text>
+          <xsl:apply-templates select="r:location"/>
+        </xsl:if>
+        <xsl:if test="r:annotation">
+          <xsl:text>. </xsl:text>
+          <xsl:apply-templates select="r:annotation"/>
+        </xsl:if>
+		<xsl:text>.</xsl:text>
+      </fo:block>
+      <xsl:apply-templates select="r:gpa"/>
+      <xsl:if test="r:subjects/r:subject">
+        <fo:block space-before="{$half.space}">
+          <xsl:apply-templates select="r:subjects"><xsl:with-param name="indent" select="$job.list.indent"/></xsl:apply-templates>
+        </fo:block>
+      </xsl:if>
+      <xsl:if test="r:projects/r:project">
+        <fo:block space-before="{$half.space}">
+          <xsl:apply-templates select="r:projects"><xsl:with-param name="indent" select="$job.list.indent"/></xsl:apply-templates>
+        </fo:block>
+      </xsl:if>
+    </fo:block>
   </xsl:template>
 
   <!-- Format a single bullet and its text -->
@@ -354,5 +401,6 @@
       </fo:list-item-body>
     </fo:list-item>
   </xsl:template>
+
 
 </xsl:stylesheet>
