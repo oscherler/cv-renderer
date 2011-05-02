@@ -2,6 +2,7 @@
 #
 # Makefile for resumes
 #
+# Modification by Olivier Scherler
 # Copyright (c) 2002 Bruce Christensen
 # All rights reserved.
 # 

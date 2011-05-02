@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-fr-a4.xsl
-Convert XML Resume into FO(PDF) using French terminology and A4 paper.
+olivier/uk-a4.xsl by Olivier Scherler
+Convert XML Resume into FO(PDF) using UK terminology and A4 paper.
 
-Copyright (c) 2001 Sean Kelly
+Based on uk-a4.xsl Copyright (c) 2001 Sean Kelly
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,6 @@ BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-$Id: fr-a4.xsl,v 1.1 2002/05/26 03:45:52 bruckie Exp $
 -->
 
 <xsl:stylesheet version="1.0"

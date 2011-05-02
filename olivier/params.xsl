@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-params.xsl
+olivier/params.xsl by Olivier Scherler
 Default XML resume transformation parameters.
 
-Copyright (c) 2000-2001 Sean Kelly
+Based on params.xsl Copyright (c) 2001 Sean Kelly
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,6 @@ BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-$Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
 -->
 
 <xsl:stylesheet version="1.0"
