@@ -1,3 +1,5 @@
 *.fo
 *.pdf
+*.html
+*.txt
 *.bbprojectsettings

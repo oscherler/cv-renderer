@@ -64,10 +64,13 @@ papersize = a4
 #xsl_base = ../src/www/xsl
 xsl_base = resume-1_5_1/xsl
 
-html_style = $(xsl_base)/output/$(country)-html.xsl
-text_style = $(xsl_base)/output/$(country)-text.xsl
+#html_style = $(xsl_base)/output/$(country)-html.xsl
+#text_style = $(xsl_base)/output/$(country)-text.xsl
 #fo_style = $(xsl_base)/output/$(country)-$(papersize).xsl
+html_style = olivier/$(country)-html.xsl
+text_style = olivier/$(country)-text.xsl
 fo_style = olivier/$(country)-$(papersize).xsl
+
 upgrade_13x_140_style = $(xsl_base)/misc/13x-140.xsl
 
 fo_flags = -c fop.xconf
