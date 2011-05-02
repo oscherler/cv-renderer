@@ -224,7 +224,7 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
   <xsl:param name="job-subheading.font.style">normal</xsl:param>
   <xsl:param name="job-subheading.font.weight">normal</xsl:param>
 
-  <xsl:param name="skillset-title.font.style">italic</xsl:param>
+  <xsl:param name="skillset-title.font.style">normal</xsl:param>
   <xsl:param name="skillset-title.font.weight">normal</xsl:param>
 
   <xsl:param name="degrees-note.font.style">italic</xsl:param>
@@ -244,5 +244,7 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
 
   <xsl:param name="project.title.font.style">normal</xsl:param>
   <xsl:param name="project.title.font.weight">600</xsl:param>
+
+  <xsl:param name="skillset.space">0pt</xsl:param>
 
 </xsl:stylesheet>

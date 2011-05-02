@@ -27,6 +27,8 @@
 
   <xsl:param name="achievements.word">Réalisations</xsl:param>
   <xsl:param name="projects.word">Projets</xsl:param>
+  <xsl:param name="other.skills.word">Autres compétences</xsl:param>
+  
   <xsl:param name="title.separator"> : </xsl:param>
 
 </xsl:stylesheet>

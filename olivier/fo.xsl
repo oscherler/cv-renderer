@@ -414,6 +414,67 @@
     </fo:list-item>
   </xsl:template>
 
+  <xsl:template match="r:skillarea">
+    <xsl:variable name="pos"><xsl:number/></xsl:variable>
+    <xsl:if test="$pos = 1">
+      <xsl:call-template name="heading">
+        <xsl:with-param name="text" select="$other.skills.word"/>
+      </xsl:call-template>
+    </xsl:if>
+	<fo:list-block provisional-distance-between-starts="3.5cm" hyphenate="false">
+	  <fo:list-item space-after="6pt">
+		  <fo:list-item-label><fo:block font-weight="600"><xsl:apply-templates select="r:title"/><xsl:value-of select="$label.colon"/></fo:block></fo:list-item-label>
+		  <fo:list-item-body start-indent="body-start()">
+            <xsl:apply-templates select="r:skillset"/>
+		  </fo:list-item-body>
+	  </fo:list-item>
+	</fo:list-block>
+  </xsl:template>
+
+  <!-- Format a skillset's title (if any) and then the skills underneath it. -->
+  <xsl:template match="r:skillset">
+    <xsl:choose>
+      <xsl:when test="$skills.format = 'comma'">
+        <fo:block space-after="{$skillset.space}">
+          <fo:inline
+           font-style="{$skillset-title.font.style}"
+           font-weight="{$skillset-title.font.weight}">
+            <xsl:apply-templates select="r:title">
+	      <xsl:with-param name="Separator" select="$title.separator"/>
+	    </xsl:apply-templates>
+          </fo:inline>
+          <xsl:apply-templates select="r:skill" mode="comma"/>
+          <!-- The following line should be removed in a future version. -->
+          <xsl:apply-templates select="r:skills" mode="comma"/>
+        </fo:block>
+      </xsl:when>
+      <xsl:otherwise>
+        <fo:block
+         keep-with-next="always"
+         font-style="{$skillset-title.font.style}"
+         font-weight="{$skillset-title.font.weight}">
+          <xsl:apply-templates select="r:title"/>
+        </fo:block>
+        <xsl:if test="r:skill">
+          <fo:list-block space-after="{$para.break.space}"
+            provisional-distance-between-starts="{$para.break.space}"
+            provisional-label-separation="{$bullet.space}">
+            <xsl:apply-templates select="r:skill" mode="bullet"/>
+          </fo:list-block>
+        </xsl:if>
+
+        <!-- The following block should be removed in a future version. -->
+        <xsl:if test="r:skills">
+          <fo:list-block space-after="{$para.break.space}"
+            provisional-distance-between-starts="{$para.break.space}"
+            provisional-label-separation="{$bullet.space}">
+            <xsl:apply-templates select="r:skills" mode="bullet"/>
+          </fo:list-block>
+        </xsl:if>
+
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <xsl:template match="r:copyright"/>
 
