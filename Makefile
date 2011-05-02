@@ -147,7 +147,6 @@ $(resume).fo: out = $(resume).fo
 $(resume).fo: xsl = $(fo_style)
 $(resume).fo: $(resume).xml
 	$(xsl_proc)
-	#$(xmllint)
 
 $(resume).pdf: in = $(resume).fo
 $(resume).pdf: out = $(resume).pdf

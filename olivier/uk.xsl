@@ -25,28 +25,6 @@
   <xsl:param name="contact.word">Personal Details</xsl:param>
   <xsl:param name="label.colon">:</xsl:param>
 
-  <xsl:param name="date.first.suffix">st</xsl:param>
-  <xsl:param name="date.second.suffix">nd</xsl:param>
-  <xsl:param name="date.third.suffix">rd</xsl:param>
-
-  <!-- Format a date. -->
-  <xsl:template match="r:date">
-    <xsl:if test="r:month">
-      <xsl:apply-templates select="r:month"/>
-      <xsl:text> </xsl:text>
-    </xsl:if>
-    <xsl:if test="r:dayOfMonth">
-      <xsl:apply-templates select="r:dayOfMonth"/>
-      <xsl:choose>
-        <xsl:when test="r:month and r:year">
-          <xsl:text>, </xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text> </xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:if>
-    <xsl:apply-templates select="r:year"/>
-  </xsl:template>
+  <xsl:param name="title.separator">: </xsl:param>
 
 </xsl:stylesheet>

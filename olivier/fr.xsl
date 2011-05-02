@@ -25,20 +25,8 @@
   <xsl:param name="contact.word">Détails personnels</xsl:param>
   <xsl:param name="label.colon"> :</xsl:param>
 
-  <xsl:param name="date.first.suffix">er</xsl:param>
-  <xsl:param name="date.second.suffix"></xsl:param>
-  <xsl:param name="date.third.suffix"></xsl:param>
-
   <xsl:param name="achievements.word">Réalisations</xsl:param>
   <xsl:param name="projects.word">Projets</xsl:param>
-
-  <!-- Format a date. -->
-  <xsl:template match="r:date" mode="numeric">
-    <xsl:apply-templates select="r:dayOfMonth"/>
-    <xsl:text>.</xsl:text>
-    <xsl:apply-templates select="r:month" mode="numeric"/>
-    <xsl:text>.</xsl:text>
-    <xsl:apply-templates select="r:year"/>
-  </xsl:template>
+  <xsl:param name="title.separator"> : </xsl:param>
 
 </xsl:stylesheet>

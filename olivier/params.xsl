@@ -77,7 +77,7 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
 
   <!-- Separator between a list title and its list -->
   <!-- (applies only to comma-separated lists) -->
-  <xsl:param name="title.separator">: </xsl:param>
+  <!-- xsl:param name="title.separator">: </xsl:param --> <!-- moved to fr and uk -->
 
   <!-- Separator between individual skills -->
   <!-- (applies only when skills.format = comma) -->
@@ -214,7 +214,7 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
   <xsl:param name="referee-name.font.style">italic</xsl:param>
   <xsl:param name="referee-name.font.weight">normal</xsl:param>
 
-  <xsl:param name="employer.font.style">italic</xsl:param>
+  <xsl:param name="employer.font.style">normal</xsl:param>
   <xsl:param name="employer.font.weight">normal</xsl:param>
 
   <xsl:param name="job-period.font.style">normal</xsl:param>

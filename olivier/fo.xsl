@@ -87,7 +87,11 @@
 			</xsl:call-template>
           </fo:table-cell>
 		  <fo:table-cell><fo:block><xsl:apply-templates select="r:birth/r:date"/></fo:block></fo:table-cell>
-		  <fo:table-cell><fo:block font-weight="600">Nationalité :</fo:block></fo:table-cell>
+		  <fo:table-cell>
+            <xsl:call-template name="contact-label">
+			  <xsl:with-param name="label"><xsl:value-of select="$nationality.word"/></xsl:with-param>
+			</xsl:call-template>
+		  </fo:table-cell>
 		  <fo:table-cell><fo:block><xsl:value-of select="r:birth/x:nationality"/></fo:block></fo:table-cell>
 		</fo:table-row>
 		<fo:table-row>
@@ -237,7 +241,8 @@
   <xsl:template match="r:job">
     <fo:block
       font-style="{$job-period.font.style}"
-      font-weight="{$job-period.font.weight}">
+      font-weight="{$job-period.font.weight}"
+      keep-with-next="always">
       <xsl:apply-templates select="r:date|r:period"/>
     </fo:block>
 	<fo:block start-indent="{$job.list.indent}">
@@ -248,7 +253,11 @@
 		</fo:inline>
 		<xsl:if test="r:employer">
 		  <xsl:text>, </xsl:text>
-		  <xsl:apply-templates select="r:employer"/>
+		  <fo:inline
+	        font-style="{$employer.font.style}"
+            font-weight="{$employer.font.weight}">
+            <xsl:apply-templates select="r:employer"/>
+		  </fo:inline>
 		</xsl:if>
 		<xsl:if test="r:location">
 		  <xsl:text>, </xsl:text>
@@ -291,8 +300,7 @@
   <xsl:template match="r:projects">
     <xsl:param name="indent" select="$body.indent"/>
     <fo:list-block space-after="{$para.break.space}" start-indent="{$project.list.indent}"
-      provisional-distance-between-starts="{$bullet.space}"
-      provisional-label-separation="{$bullet.space}">
+      provisional-distance-between-starts="{$bullet.space}">
       <xsl:apply-templates select="r:project"/>
     </fo:list-block>
   </xsl:template>
@@ -320,8 +328,7 @@
   <!-- Format the achievements section as a bullet list *SE* -->
   <xsl:template match="r:achievements">
     <fo:list-block space-after="{$para.break.space}" start-indent="{$project.list.indent}"
-      provisional-distance-between-starts="{$bullet.space}"
-      provisional-label-separation="{$bullet.space}">
+      provisional-distance-between-starts="{$bullet.space}">
       <xsl:for-each select="r:achievement">
         <xsl:call-template name="bulletListItem"><xsl:with-param name="indent" select="$project.list.indent"/></xsl:call-template>
       </xsl:for-each>
@@ -332,7 +339,8 @@
   <xsl:template match="r:degree">
     <fo:block
       font-style="{$job-period.font.style}"
-      font-weight="{$job-period.font.weight}">
+      font-weight="{$job-period.font.weight}"
+      keep-with-next="always">
       <xsl:apply-templates select="r:date|r:period"/>
     </fo:block>
 	<fo:block start-indent="{$job.list.indent}">
@@ -358,11 +366,15 @@
           <xsl:text>, </xsl:text>
           <xsl:apply-templates select="r:location"/>
         </xsl:if>
-        <xsl:if test="r:annotation">
-          <xsl:text>. </xsl:text>
-          <xsl:apply-templates select="r:annotation"/>
-        </xsl:if>
-		<xsl:text>.</xsl:text>
+        <xsl:choose>
+          <xsl:when test="r:annotation">
+            <xsl:text>. </xsl:text>
+            <xsl:apply-templates select="r:annotation"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>.</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
       </fo:block>
       <xsl:apply-templates select="r:gpa"/>
       <xsl:if test="r:subjects/r:subject">
@@ -402,5 +414,7 @@
     </fo:list-item>
   </xsl:template>
 
+
+  <xsl:template match="r:copyright"/>
 
 </xsl:stylesheet>
