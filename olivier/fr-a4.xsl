@@ -38,6 +38,6 @@ $Id: fr-a4.xsl,v 1.1 2002/05/26 03:45:52 bruckie Exp $
 
   <xsl:import href="fo.xsl"/>
   <xsl:import href="../resume-1_5_1/xsl/paper/a4.xsl"/>
-  <xsl:import href="../resume-1_5_1/xsl/country/fr.xsl"/>
+  <xsl:import href="fr.xsl"/>
 
 </xsl:stylesheet>

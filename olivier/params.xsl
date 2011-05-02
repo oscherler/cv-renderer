@@ -179,7 +179,8 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
   <xsl:param name="header.name.font.weight">bold</xsl:param>
   <xsl:param name="header.name.font.size" select="$body.font.size"/>
 
-  <xsl:param name="header.item.font.style">italic</xsl:param>
+  <xsl:param name="header.item.font.style">normal</xsl:param>
+  <xsl:param name="header.item.font.weight">600</xsl:param>
 
   <xsl:param name="body.font.size">11pt</xsl:param>
   <xsl:param name="body.font.family">Baskerville</xsl:param>
@@ -187,11 +188,14 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
   <xsl:param name="footer.font.size">8pt</xsl:param>
   <xsl:param name="footer.font.family">serif</xsl:param>
 
-  <xsl:param name="heading.font.size">10pt</xsl:param>
-  <xsl:param name="heading.font.family">sans-serif</xsl:param>
-  <xsl:param name="heading.font.weight">bold</xsl:param>
+  <xsl:param name="heading.font.size">14pt</xsl:param>
+  <xsl:param name="heading.font.family">Baskerville</xsl:param>
+  <xsl:param name="heading.font.weight">600</xsl:param>
   <xsl:param name="heading.border.bottom.style">none</xsl:param>
   <xsl:param name="heading.border.bottom.width">thin</xsl:param>
+
+  <xsl:param name="heading.space.before">16pt</xsl:param>
+  <xsl:param name="heading.space.after">12pt</xsl:param>
 
   <!-- Used for copyright notice and "last modified" date -->
   <xsl:param name="fineprint.font.size">8pt</xsl:param>
@@ -232,5 +236,7 @@ $Id: params.xsl,v 1.17 2002/11/28 00:49:03 brandondoyle Exp $
   <!-- Used on "*Overall GPA*: 3.0" -->
   <xsl:param name="gpa-preamble.font.style">italic</xsl:param>
   <xsl:param name="gpa-preamble.font.weight">normal</xsl:param>
+
+  <xsl:param name="superscript.size">7pt</xsl:param>
 
 </xsl:stylesheet>
