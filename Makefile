@@ -71,6 +71,10 @@ html_style = olivier/$(country)-html.xsl
 text_style = olivier/$(country)-text.xsl
 fo_style = olivier/$(country)-$(papersize).xsl
 
+pdf_deps = olivier/fo.xsl olivier/fr-a4.xsl olivier/fr.xsl olivier/params.xsl olivier/uk-a4.xsl olivier/uk.xsl
+html_deps = olivier/fr-html.xsl olivier/fr.xsl olivier/html.xsl olivier/params.xsl olivier/uk-html.xsl olivier/uk.xsl
+text_deps = olivier/fr-text.xsl olivier/fr.xsl olivier/params.xsl olivier/text.xsl olivier/uk-text.xsl olivier/uk.xsl
+
 upgrade_13x_140_style = $(xsl_base)/misc/13x-140.xsl
 
 fo_flags = -c fop.xconf
@@ -149,19 +153,19 @@ clean-%:
 %.html: in = $*.xml
 %.html: out = $*.html
 %.html: xsl = $(html_style)
-%.html: %.xml
+%.html: %.xml $(html_deps)
 	$(xsl_proc)
 
 %.txt: in = $*.xml
 %.txt: out = $*.txt
 %.txt: xsl = $(text_style)
-%.txt: %.xml
+%.txt: %.xml $(text_deps)
 	$(xsl_proc)
 
 %.fo: in = $*.xml
 %.fo: out = $*.fo
 %.fo: xsl = $(fo_style)
-%.fo: %.xml
+%.fo: %.xml $(pdf_deps)
 	$(xsl_proc)
 
 %.pdf: in = $*.fo
