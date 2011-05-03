@@ -8,8 +8,10 @@
 		<string>BBD0F681-54C8-4311-8234-8B606F7F1DFC</string>
 		<string>DA2321F9-100B-4E98-845C-09DB429CF514</string>
 		<string>F2C6C21A-8DBD-4665-BD3B-798E1380ADA2</string>
+		<string>4D40EC37-D91D-4009-8A83-062E6321EFD8</string>
 		<string>49BE4793-9175-4AB9-8351-12DE427EC572</string>
 		<string>3F708BDB-7514-4FB2-9256-F19B6AD1A919</string>
+		<string>8B0C8B91-8716-4000-B52E-67A3955637D4</string>
 		<string>4D4F572F-DDFC-439A-827B-0CB12FF8CBD6</string>
 		<string>6DD984E0-7E1A-4E69-82E4-06CA09668662</string>
 	</array>
@@ -114,6 +116,39 @@
 			<key>ItemType</key>
 			<string>FileReference</string>
 		</dict>
+		<key>4D40EC37-D91D-4009-8A83-062E6321EFD8</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>AliasData</key>
+				<data>
+				AAAAAAGEAAIAAAhmaWxlbWF0ZQAAAAAAAAAAAAAAAAAA
+				AAAAAADJFK9sSCsAAACh/XAKY3YtZW4uaHRtbAAAAAAA
+				AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				AAAAAAAAAAAAAAAAAAAAAKM5nMnlCagAAAAAAAAAAP//
+				//8AAAkgAAAAAAAAAAAAAAAAAAAAAmZvABAACAAAyRSh
+				XAAAABEACAAAyeTtiAAAAAEAGACh/XAAn365AA/5lQAP
+				xVUAA0UPAACRRQACADpmaWxlbWF0ZTpVc2VyczpvbGl2
+				aWVyOlByb2dyYW1taW5nOlB5dGhvbjpDVjpmbzpjdi1l
+				bi5odG1sAA4AFgAKAGMAdgAtAGUAbgAuAGgAdABtAGwA
+				DwASAAgAZgBpAGwAZQBtAGEAdABlABIAMVVzZXJzL29s
+				aXZpZXIvUHJvZ3JhbW1pbmcvUHl0aG9uL0NWL2ZvL2N2
+				LWVuLmh0bWwAABMAAS8AABUAAgAO//8AAA==
+				</data>
+				<key>FileURL</key>
+				<string>file://localhost/Users/olivier/Programming/Python/CV/fo/cv-en.html</string>
+				<key>RelativePath</key>
+				<string>./cv-en.html</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>cv-en.html</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+		</dict>
 		<key>4D4F572F-DDFC-439A-827B-0CB12FF8CBD6</key>
 		<dict>
 			<key>ItemData</key>
@@ -177,6 +212,39 @@
 			</dict>
 			<key>ItemName</key>
 			<string>Makefile</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+		</dict>
+		<key>8B0C8B91-8716-4000-B52E-67A3955637D4</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>AliasData</key>
+				<data>
+				AAAAAAGEAAIAAAhmaWxlbWF0ZQAAAAAAAAAAAAAAAAAA
+				AAAAAADJFK9sSCsAAACh/XAKY3YtZnIuaHRtbAAAAAAA
+				AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				AAAAAAAAAAAAAAAAAAAAAKM5ksnlCZ8AAAAAAAAAAP//
+				//8AAAkgAAAAAAAAAAAAAAAAAAAAAmZvABAACAAAyRSh
+				XAAAABEACAAAyeTtfwAAAAEAGACh/XAAn365AA/5lQAP
+				xVUAA0UPAACRRQACADpmaWxlbWF0ZTpVc2VyczpvbGl2
+				aWVyOlByb2dyYW1taW5nOlB5dGhvbjpDVjpmbzpjdi1m
+				ci5odG1sAA4AFgAKAGMAdgAtAGYAcgAuAGgAdABtAGwA
+				DwASAAgAZgBpAGwAZQBtAGEAdABlABIAMVVzZXJzL29s
+				aXZpZXIvUHJvZ3JhbW1pbmcvUHl0aG9uL0NWL2ZvL2N2
+				LWZyLmh0bWwAABMAAS8AABUAAgAO//8AAA==
+				</data>
+				<key>FileURL</key>
+				<string>file://localhost/Users/olivier/Programming/Python/CV/fo/cv-fr.html</string>
+				<key>RelativePath</key>
+				<string>./cv-fr.html</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>cv-fr.html</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 		</dict>
