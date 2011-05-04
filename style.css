@@ -1,0 +1,127 @@
+
+/*@import 'Vollkorn-fontfacekit/stylesheet.css';*/
+/*font-family: 'VollkornRegular';*/
+@import 'Bergamo-Std-fontfacekit/stylesheet.css';
+/*font-family: 'BergamoStdRegular';*/
+/*@import 'Linux-Libertine-fontfacekit/stylesheet.css';*/
+/*font-family: 'LinuxLibertineORegular';*/
+/*@import 'TeX-Gyre-Schola-fontfacekit/stylesheet.css';*/
+/*font-family: 'TeXGyreScholaRegular';*/
+/*@import 'TeX-Gyre-Termes-fontfacekit/stylesheet.css';*/
+/*font-family: 'TexGyreTermesRegular';*/
+
+body
+{
+	background-color: #dfefd4;
+	margin: 0;
+		
+	font-family: 'BergamoStdRegular';
+	font-size: 11pt;
+}
+
+.resume
+{
+	width:  700px;
+	padding: 24px 48px;
+	margin:  auto;
+	
+	background-color: #fff;
+}
+
+strong, b
+{
+	font-family: 'BergamoStdBold';
+	font-weight: normal;
+}
+
+h1
+{
+	text-align: center;
+	font-family: 'BergamoStdBold';
+	font-weight: normal;
+	font-size: 18pt;
+}
+
+h2
+{
+	font-family: 'BergamoStdBold';
+	font-weight: normal;
+	font-size: 14pt;
+}
+
+dl.jobs dt,
+dl.jobs dd,
+dl.degrees dt,
+dl.degrees dd
+{
+	margin-bottom: 0.5em;
+}
+
+.jobs .title,
+.degrees .title
+{
+	font-family: 'BergamoStdBold';
+	font-weight: normal;
+}
+
+dt
+{
+	font-family: 'BergamoStdBold';
+	font-weight: normal;
+}
+
+dl.jobs dt,
+dl.degrees dt
+{
+	font-family: 'BergamoStd';
+	font-weight: normal;
+}
+
+dd p
+{
+	margin-top:  0;
+}
+
+#header #birth-address,
+#header #nat-contact
+{
+	float:  left;
+	width:  350px;
+}
+
+#header dl
+{
+	margin: 0.5em 0;
+}
+
+#header dt
+{
+	float:  left;
+}
+
+#header dd
+{
+	margin-left:  140px;
+}
+
+#header:after
+{
+	display: block;
+	content: ' ';
+	clear: both;
+}
+
+dl.skillarea dt
+{
+	float:  left;
+}
+
+dl.skillarea dd
+{
+	margin-left:  140px;
+}
+
+dl.skillarea dd p
+{
+	margin-bottom:  0.3em;
+}

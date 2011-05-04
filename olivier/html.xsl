@@ -42,14 +42,14 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:strip-space elements="*"/>
 
   <xsl:include href="params.xsl"/>
-  <xsl:output method="html" omit-xml-declaration="yes" indent="no" encoding="UTF-8" 
-   doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" 
-   doctype-system="http://www.w3.org/TR/xhtml1/DTD/strict.dtd"/>
-   
 
-  <xsl:template name="heading">
-    <xsl:param name="text">HEADING NOT DEFINED</xsl:param>
-    <h2><xsl:copy-of select="$text"/></h2>
+  <xsl:output method="html" omit-xml-declaration="yes" indent="yes" encoding="UTF-8" 
+   doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" 
+   doctype-system="http://www.w3.org/TR/html4/loose.dtd"/>
+
+  <xsl:template name="Heading">
+    <xsl:param name="Text">HEADING NOT DEFINED</xsl:param>
+    <h2><xsl:copy-of select="$Text"/></h2>
   </xsl:template>
 
   <xsl:template match="/">
@@ -60,20 +60,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsl:text> - </xsl:text>
           <xsl:value-of select="$resume.word"/>
         </title>
-        <!--xsl:choose>
-          <xsl:when test="$css.embed = 1">
-            <style>
-              <xsl:value-of select="document($css.href)"/>
-            </style>
-          </xsl:when>
-          <xsl:otherwise>
-            <link rel="stylesheet" type="text/css">
-              <xsl:attribute name="href">
-                <xsl:value-of select="$css.href"/>
-              </xsl:attribute>
-            </link>
-          </xsl:otherwise>
-        </xsl:choose-->
+		<link rel="stylesheet" type="text/css">
+		  <xsl:attribute name="href"><xsl:value-of select="$css.href"/></xsl:attribute>
+		</link>
         <xsl:apply-templates select="r:resume/r:keywords" mode="header"/>
       </head>
       <body>
@@ -206,6 +195,18 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <xsl:apply-templates select="r:from"/> – <xsl:apply-templates select="r:to"/>
   </xsl:template>
 
+<!-- Past jobs, with level 2 heading. -->
+  <xsl:template match="r:history">
+    <xsl:call-template name="Heading">
+      <xsl:with-param name="Text">
+        <xsl:value-of select="$history.word"/>
+      </xsl:with-param>
+    </xsl:call-template>
+    <dl class="jobs">
+      <xsl:apply-templates select="r:job"/>
+    </dl>
+  </xsl:template>
+
   <!-- Format a single job. -->
   <xsl:template match="r:job">
     <dt><xsl:apply-templates select="r:date|r:period"/></dt>
@@ -223,7 +224,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		<xsl:text>.</xsl:text>
 	  </p>
 	  <xsl:if test="r:description">
-		<p><xsl:apply-templates select="r:description"/></p>
+		<xsl:apply-templates select="r:description"/>
 	  </xsl:if>
 	  <xsl:if test="r:projects/r:project">
 		<h4><xsl:value-of select="$projects.word"/><xsl:value-of select="$label.colon"/></h4>
@@ -267,6 +268,14 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <xsl:call-template name="bulletListItem"/>
       </xsl:for-each>
     </ul>
+  </xsl:template>
+
+  <!-- Degrees and stuff -->
+  <xsl:template match="r:degrees">
+    <dl class="degrees">
+      <xsl:apply-templates select="r:degree"/>
+    </dl>
+    <xsl:apply-templates select="r:note"/>
   </xsl:template>
 
   <!-- Format a single degree -->
@@ -342,8 +351,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:template match="r:skillarea">
     <xsl:variable name="pos"><xsl:number/></xsl:variable>
     <xsl:if test="$pos = 1">
-      <xsl:call-template name="heading">
-        <xsl:with-param name="text" select="$other.skills.word"/>
+      <xsl:call-template name="Heading">
+        <xsl:with-param name="Text" select="$other.skills.word"/>
       </xsl:call-template>
     </xsl:if>
 	<dl class="skillarea">
@@ -359,11 +368,13 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <xsl:choose>
       <xsl:when test="$skills.format = 'comma'">
         <p>
-          <span class="title">
-            <xsl:apply-templates select="r:title">
-              <xsl:with-param name="Separator" select="$title.separator"/>
-            </xsl:apply-templates>
-          </span>
+          <xsl:if test="r:title">
+			<span class="title">
+			  <xsl:apply-templates select="r:title">
+				<xsl:with-param name="Separator" select="$title.separator"/>
+			  </xsl:apply-templates>
+			</span>
+          </xsl:if>
           <xsl:apply-templates select="r:skill" mode="comma"/>
           <!-- The following line should be removed in a future version. -->
           <xsl:apply-templates select="r:skills" mode="comma"/>

@@ -95,7 +95,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <!-- Header information -->
   <xsl:template match="r:header" mode="standard">
 
-    <fo:block font-weight="600" font-size="18pt" text-align="center" space-after="12pt">
+    <fo:block font-weight="{$global.bold.weight}" font-size="18pt" text-align="center" space-after="12pt">
     	<xsl:apply-templates select="r:name"/>
     	<xsl:text> – </xsl:text>
     	<xsl:value-of select="$resume.word"/>
@@ -454,7 +454,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsl:if>
 	<fo:list-block provisional-distance-between-starts="3.5cm" hyphenate="false">
 	  <fo:list-item space-after="6pt">
-		  <fo:list-item-label><fo:block font-weight="600"><xsl:apply-templates select="r:title"/><xsl:value-of select="$label.colon"/></fo:block></fo:list-item-label>
+		  <fo:list-item-label><fo:block font-weight="{$global.bold.weight}"><xsl:apply-templates select="r:title"/><xsl:value-of select="$label.colon"/></fo:block></fo:list-item-label>
 		  <fo:list-item-body start-indent="body-start()">
             <xsl:apply-templates select="r:skillset"/>
 		  </fo:list-item-body>

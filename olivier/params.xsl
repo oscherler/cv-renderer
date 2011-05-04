@@ -132,12 +132,12 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <!-- Cascading stylesheet to use -->
   <!-- Make sure the path to the css file is correct! -->
-  <xsl:param name="css.href">../../css/compact.css</xsl:param>
+  <xsl:param name="css.href">style.css</xsl:param>
 
   <!-- Should style sheets be embedded within the html file? -->
   <!-- '1' to embed the css in the html (allows for easy emailing) -->
   <!-- '0' to link to the css in a seperate file -->
-  <xsl:param name="css.embed">1</xsl:param>
+  <xsl:param name="css.embed">0</xsl:param>
 
   <!-- PLAIN TEXT-SPECIFIC ================================================ -->
 
@@ -155,6 +155,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="text.indent.width">4</xsl:param>
 
   <!-- XSL-FO-SPECIFIC ==================================================== -->
+
+  <xsl:param name="global.font.family">Bergamo Std</xsl:param>
+  <xsl:param name="global.bold.weight">bold</xsl:param>
 
   <!-- Settings for lines around the header of the print resume -->
   <xsl:param name="header.line.pattern">rule</xsl:param>
@@ -174,21 +177,21 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="bullet.space">1.0em</xsl:param>
 
   <xsl:param name="header.name.font.style">normal</xsl:param>
-  <xsl:param name="header.name.font.weight">600</xsl:param>
+  <xsl:param name="header.name.font.weight" select="$global.bold.weight"/>
   <xsl:param name="header.name.font.size" select="$body.font.size"/>
 
   <xsl:param name="header.item.font.style">normal</xsl:param>
-  <xsl:param name="header.item.font.weight">600</xsl:param>
+  <xsl:param name="header.item.font.weight" select="$global.bold.weight"/>
 
   <xsl:param name="body.font.size">11pt</xsl:param>
-  <xsl:param name="body.font.family">Baskerville</xsl:param>
+  <xsl:param name="body.font.family" select="$global.font.family"/>
 
   <xsl:param name="footer.font.size">8pt</xsl:param>
   <xsl:param name="footer.font.family">serif</xsl:param>
 
   <xsl:param name="heading.font.size">14pt</xsl:param>
-  <xsl:param name="heading.font.family">Baskerville</xsl:param>
-  <xsl:param name="heading.font.weight">600</xsl:param>
+  <xsl:param name="heading.font.family" select="$global.font.family"/>
+  <xsl:param name="heading.font.weight" select="$global.bold.weight"/>
   <xsl:param name="heading.border.bottom.style">none</xsl:param>
   <xsl:param name="heading.border.bottom.width">thin</xsl:param>
 
@@ -198,16 +201,16 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <!-- Used for copyright notice and "last modified" date -->
   <xsl:param name="fineprint.font.size">8pt</xsl:param>
 
-  <xsl:param name="emphasis.font.weight">600</xsl:param>
+  <xsl:param name="emphasis.font.weight" select="$global.bold.weight"/>
   <xsl:param name="citation.font.style">italic</xsl:param>
-  <xsl:param name="url.font.family">Baskerville</xsl:param>
+  <xsl:param name="url.font.family" select="$global.font.family"/>
 
   <xsl:param name="jobtitle.font.style">normal</xsl:param>
-  <xsl:param name="jobtitle.font.weight">600</xsl:param>
+  <xsl:param name="jobtitle.font.weight" select="$global.bold.weight"/>
 
   <!-- Used on degree major and level -->
   <xsl:param name="degree.font.style">normal</xsl:param>
-  <xsl:param name="degree.font.weight">600</xsl:param>
+  <xsl:param name="degree.font.weight" select="$global.bold.weight"/>
 
   <xsl:param name="referee-name.font.style">italic</xsl:param>
   <xsl:param name="referee-name.font.weight">normal</xsl:param>
@@ -241,7 +244,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="project.list.indent">1.5cm</xsl:param>
 
   <xsl:param name="project.title.font.style">normal</xsl:param>
-  <xsl:param name="project.title.font.weight">600</xsl:param>
+  <xsl:param name="project.title.font.weight" select="$global.bold.weight"/>
 
   <xsl:param name="skillset.space">0pt</xsl:param>
 

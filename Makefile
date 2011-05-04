@@ -113,7 +113,7 @@ filter_proc = java net.sourceforge.xmlresume.filter.Filter -in $(in) -out $(out)
 # End configurable parameters
 #------------------------------------------------------------------------------
 
-.PHONY: all html text fo pdf clean 13x-140
+.PHONY: all html text fo pdf clean 13x-140 fonts
 
 default: pdf
 all: cv-fr.html cv-fr.txt cv-fr.fo cv-fr.pdf cv-en.html cv-en.txt cv-en.fo cv-en.pdf
@@ -124,6 +124,9 @@ pdf: $(resume).pdf
 13x-140: $(resume)-140.xml
 rtf: $(resume).rtf
 filter: $(resume)-filtered.xml
+
+fonts:
+	java org.apache.fop.tools.fontlist.FontListMain -c fop.xconf
 
 cv-en.fo: country = uk
 cv-en.pdf: country = uk
