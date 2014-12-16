@@ -161,7 +161,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xsl:template name="contact-data">
     <xsl:param name="field"/>
-    <fo:block><xsl:value-of select="$field"/></fo:block>
+    <!-- hack: very thin white border, otherwise the clickable area of the link bleed
+    out of the content -->
+    <fo:block border-width="0.01pt" border-style="solid" border-color="white"><xsl:value-of select="$field"/></fo:block>
   </xsl:template>
 
   <!-- Format contact information. -->
