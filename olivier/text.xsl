@@ -38,7 +38,8 @@ In general, each block is responsible for outputting a newline after itself.
 
 <xsl:stylesheet version="1.0"
     xmlns:r="http://xmlresume.sourceforge.net/resume/0.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:x="http://olivier.ithink.ch/resume/extension/0.0">
 
   <xsl:import href="../resume-1_5_1/xsl/format/text.xsl"/>
 
