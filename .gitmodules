@@ -1,3 +1,3 @@
 [submodule "resume-1_5_1"]
 	path = resume-1_5_1
-	url = /Users/olivier/Programming/Python/CV/resume-1_5_1
+	url = git@bitbucket-personal:oscherler/xmlresume.git
