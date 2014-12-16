@@ -82,7 +82,7 @@ fo_flags = -c fop.xconf
 #------------------------------------------------------------------------------
 # Processing software
 #------------------------------------------------------------------------------
-make = gmake
+make = make
 
 xsl_proc = java org.apache.xalan.xslt.Process $(xsl_flags) -in $(in) -xsl $(xsl) -out $(out)
 #xsl_proc = java com.icl.saxon.StyleSheet $(xsl_flags) -o $(out) $(in) $(xsl) $(xsl_params)
@@ -107,7 +107,7 @@ rtf_proc = java com.xmlmind.fo.converter.Driver $(in) $(out)
 # Take a look at example2.xml and try changing the filter targets to get a 
 # feel for how the filter works.
 filter_targets = foodservice carpentry
-filter_proc = java net.sourceforge.xmlresume.filter.Filter -in $(in) -out $(out) $(filter_targets)
+filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.sourceforge.xmlresume.filter.Filter -in $(in) -out $(out) $(filter_targets)
 
 #------------------------------------------------------------------------------
 # End configurable parameters
@@ -153,22 +153,22 @@ clean-%:
 	rm -f $*-filtered.fo
 	rm -f $*-filtered.rtf
 
-%.html: in = $*.xml
+%.html: in = $*-filtered.xml
 %.html: out = $*.html
 %.html: xsl = $(html_style)
-%.html: %.xml $(html_deps)
+%.html: %-filtered.xml $(html_deps)
 	$(xsl_proc)
 
-%.txt: in = $*.xml
+%.txt: in = $*-filtered.xml
 %.txt: out = $*.txt
 %.txt: xsl = $(text_style)
-%.txt: %.xml $(text_deps)
+%.txt: %-filtered.xml $(text_deps)
 	$(xsl_proc)
 
-%.fo: in = $*.xml
+%.fo: in = $*-filtered.xml
 %.fo: out = $*.fo
 %.fo: xsl = $(fo_style)
-%.fo: %.xml $(pdf_deps)
+%.fo: %-filtered.xml $(pdf_deps)
 	$(xsl_proc)
 
 %.pdf: in = $*.fo
@@ -192,3 +192,17 @@ clean-%:
 %-filtered.xml: %.xml
 	$(filter_proc)
 	$(make) all resume=$*-filtered
+
+cv-fr-filtered.xml: in = cv-multilingual.xml
+cv-fr-filtered.xml: out = cv-fr-filtered.xml
+cv-fr-filtered.xml: filter_targets = fr abroad
+cv-fr-filtered.xml: cv-multilingual.xml
+	$(filter_proc)
+	$(make) all resume=cv-fr-filtered
+
+cv-en-filtered.xml: in = cv-multilingual.xml
+cv-en-filtered.xml: out = cv-en-filtered.xml
+cv-en-filtered.xml: filter_targets = en abroad
+cv-en-filtered.xml: cv-multilingual.xml
+	$(filter_proc)
+	$(make) all resume=cv-en-filtered
