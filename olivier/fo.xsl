@@ -161,9 +161,19 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xsl:template name="contact-data">
     <xsl:param name="field"/>
-    <!-- hack: very thin white border, otherwise the clickable area of the link bleed
-    out of the content -->
-    <fo:block border-width="0.01pt" border-style="solid" border-color="white"><xsl:value-of select="$field"/></fo:block>
+    <xsl:param name="link" select="0"/>
+    <fo:block>
+      <xsl:choose>
+        <xsl:when test="$link = 1">
+	      <fo:basic-link external-destination="{$field}">
+	    	<xsl:value-of select="$field"/>
+          </fo:basic-link>
+        </xsl:when>
+        <xsl:otherwise>
+	    	<xsl:value-of select="$field"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </fo:block>
   </xsl:template>
 
   <!-- Format contact information. -->
@@ -233,6 +243,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsl:with-param name="field">
         <xsl:apply-templates/>
       </xsl:with-param>
+      <xsl:with-param name="link" select="1"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -249,6 +260,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsl:with-param name="field">
         <xsl:apply-templates/>
       </xsl:with-param>
+      <xsl:with-param name="link" select="1"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -507,6 +519,22 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+<!-- link -> make link from href attribute -->
+  <xsl:template match="r:link">
+    <fo:basic-link>
+      <xsl:attribute name="external-destination">
+        <xsl:apply-templates select="@href"/>
+      </xsl:attribute>
+      <xsl:apply-templates/>
+    </fo:basic-link>
+  </xsl:template>
+
+  <xsl:template match="r:url">
+    <fo:basic-link external-destination="{.}">
+      <xsl:apply-templates/>
+    </fo:basic-link>
   </xsl:template>
 
   <xsl:template match="r:copyright"/>
