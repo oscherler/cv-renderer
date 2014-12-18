@@ -54,7 +54,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <!-- Layout of the referees section: "compact" or "standard" -->
   <!-- Does not affect the layout of the text output, only html and pdf -->
-  <xsl:param name="referees.layout">compact</xsl:param>
+  <xsl:param name="referees.layout">standard</xsl:param>
 
   <!-- Format for name/contact header: 'standard' or 'centered' *SE* -->
   <!-- Set here or override on command line -->
@@ -114,8 +114,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="subjects.result.end">)</xsl:param>
 
   <!-- Text to use to indicate start and end of location in all formats -->
-  <xsl:param name="location.start"> (</xsl:param>
-  <xsl:param name="location.end">)</xsl:param>
+  <xsl:param name="location.start"></xsl:param>
+  <xsl:param name="location.end"></xsl:param>
 
   <!-- Separator between <para>s in a description. -->
   <!-- (applies only when interest.description.format = single-line) -->
