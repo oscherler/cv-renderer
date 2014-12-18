@@ -38,4 +38,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:import href="../resume-1_5_1/xsl/paper/a4.xsl"/>
   <xsl:import href="uk.xsl"/>
 
+  <xsl:param name="margin.top">17mm</xsl:param>
+  <xsl:param name="margin.bottom">17mm</xsl:param>
+
 </xsl:stylesheet>
