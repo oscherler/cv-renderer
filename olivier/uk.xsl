@@ -38,7 +38,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xsl:import href="../resume-1_5_1/xsl/country/uk.xsl"/>
 
-  <xsl:param name="resume.word">Curriculum Vitae</xsl:param>
+  <xsl:param name="resume.word">CV</xsl:param>
 
   <xsl:param name="page.word">page</xsl:param>
   
@@ -107,13 +107,13 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xsl:param name="pager.word">Pager</xsl:param>
   <xsl:param name="email.word">E-mail</xsl:param>
-  <xsl:param name="url.word">URL</xsl:param>
+  <xsl:param name="url.word">Website</xsl:param>
 
   <xsl:param name="contact.word">Personal Details</xsl:param>
   <xsl:param name="label.colon">:</xsl:param>
 
   <xsl:param name="achievements.word">Achievements</xsl:param>
-  <xsl:param name="projects.word">Projects</xsl:param>
+  <xsl:param name="projects.word">Mission</xsl:param>
   <xsl:param name="other.skills.word">Other Skills</xsl:param>
 
   <xsl:param name="title.separator">: </xsl:param>
