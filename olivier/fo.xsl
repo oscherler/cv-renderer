@@ -318,12 +318,12 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	  </xsl:if>
 	  <xsl:if test="r:projects/r:project">
 		<fo:block>
-		  <!-- fo:block
+		  <fo:block
 			  keep-with-next="always"
 			  font-style="{$job-subheading.font.style}"
 			  font-weight="{$job-subheading.font.weight}">
 			<xsl:value-of select="$projects.word"/><xsl:value-of select="$label.colon"/>
-		  </fo:block -->
+		  </fo:block>
 		  <xsl:apply-templates select="r:projects"><xsl:with-param name="indent" select="$job.list.indent"/></xsl:apply-templates>
 		</fo:block>
 	  </xsl:if>
