@@ -523,7 +523,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 <!-- link -> make link from href attribute -->
   <xsl:template match="r:link">
-    <fo:basic-link>
+    <fo:basic-link text-decoration="underline">
       <xsl:attribute name="external-destination">
         <xsl:apply-templates select="@href"/>
       </xsl:attribute>
