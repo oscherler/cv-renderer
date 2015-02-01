@@ -50,7 +50,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <!-- Should referees be displayed when formatting? -->
   <!-- '1' to display referees -->
   <!-- '0' to display referees.hidden.phrase instead. -->
-  <xsl:param name="referees.display">1</xsl:param>
+  <xsl:param name="referees.display">0</xsl:param>
 
   <!-- Layout of the referees section: "compact" or "standard" -->
   <!-- Does not affect the layout of the text output, only html and pdf -->
