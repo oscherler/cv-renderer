@@ -53,7 +53,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="interests.word">Interests</xsl:param>
   <xsl:param name="security-clearances.word">Security Clearances</xsl:param>
   <xsl:param name="awards.word">Awards</xsl:param>
-  <xsl:param name="miscellany.word">Miscellany</xsl:param>
+  <xsl:param name="miscellany.word">Remarks</xsl:param>
 
   <!-- Word to use for "in", as in "bachelor degree *in* political science" -->
   <xsl:param name="in.word">in</xsl:param>

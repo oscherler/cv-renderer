@@ -61,8 +61,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="achievements.word">Réalisations</xsl:param>
   <xsl:param name="projects.word">Missions</xsl:param>
   <xsl:param name="other.skills.word">Autres compétences</xsl:param>
-  
+  <xsl:param name="miscellany.word">Remarques</xsl:param>
+
   <xsl:param name="title.separator"> : </xsl:param>
+
+  <xsl:param name="referees.hidden.phrase">Disponibles sur demande.</xsl:param>
 
   <!-- Format a date. -->
   <xsl:template match="r:date">
