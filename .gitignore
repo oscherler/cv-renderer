@@ -1,6 +1,9 @@
-*-filtered.xml
-*.fo
-*.pdf
-*.html
-*.txt
+/tmp
+/remove
+
+#*-filtered.xml
+#*.fo
+#*.pdf
+#*.html
+#*.txt
 *.bbprojectsettings

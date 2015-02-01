@@ -116,69 +116,66 @@ filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.s
 .PHONY: all html text fo pdf clean 13x-140 fonts
 
 default: pdf
-all: cv-fr.html cv-fr.txt cv-fr.fo cv-fr.pdf cv-en.html cv-en.txt cv-en.fo cv-en.pdf
-html: $(resume).html
-text: $(resume).txt
-fo: $(resume).fo
-pdf: $(resume).pdf
+all: out/cv-fr.html out/cv-fr.txt tmp/cv-fr.fo out/cv-fr.pdf out/cv-en.html out/cv-en.txt tmp/cv-en.fo out/cv-en.pdf
+html: out/$(resume).html
+text: out/$(resume).txt
+fo: tmp/$(resume).fo
+pdf: out/cv-en.pdf out/cv-fr.pdf
 13x-140: $(resume)-140.xml
-rtf: $(resume).rtf
-filter: $(resume)-filtered.xml
+rtf: out/$(resume).rtf
+filter: tmp/$(resume)-filtered.xml
 
 fonts:
 	java org.apache.fop.tools.fontlist.FontListMain -c fop.xconf
 
-cv-en.fo: country = uk
-cv-en.pdf: country = uk
-cv-en.txt: country = uk
-cv-en.html: country = uk
+tmp/cv-en-filtered.xml: filter_targets = en abroad
+tmp/cv-en.fo: country = uk
+out/cv-en.pdf: country = uk
+out/cv-en.txt: country = uk
+out/cv-en.html: country = uk
 
-cv-fr.fo: country = fr
-cv-fr.pdf: country = fr
-cv-fr.txt: country = fr
-cv-fr.html: country = fr
+tmp/cv-fr-filtered.xml: filter_targets = fr abroad
+tmp/cv-fr.fo: country = fr
+out/cv-fr.pdf: country = fr
+out/cv-fr.txt: country = fr
+out/cv-fr.html: country = fr
 
 clean: clean-cv-fr clean-cv-en
 
 clean-%:
-	rm -f $*.html
-	rm -f $*.txt
-	rm -f $*.fo
-	rm -f $*.pdf
-	rm -f $*.rtf
-	rm -f $*-filtered.xml
-	rm -f $*-filtered.html
-	rm -f $*-filtered.txt
-	rm -f $*-filtered.pdf
-	rm -f $*-filtered.fo
-	rm -f $*-filtered.rtf
+	rm -f out/$*.html
+	rm -f out/$*.txt
+	rm -f tmp/$*.fo
+	rm -f out/$*.pdf
+	rm -f out/$*.rtf
+	rm -f tmp/$*-filtered.xml
 
-%.html: in = $*-filtered.xml
-%.html: out = $*.html
-%.html: xsl = $(html_style)
-%.html: %-filtered.xml $(html_deps)
+out/%.html: in = tmp/$*-filtered.xml
+out/%.html: out = out/$*.html
+out/%.html: xsl = $(html_style)
+out/%.html: tmp/%-filtered.xml $(html_deps)
 	$(xsl_proc)
 
-%.txt: in = $*-filtered.xml
-%.txt: out = $*.txt
-%.txt: xsl = $(text_style)
-%.txt: %-filtered.xml $(text_deps)
+out/%.txt: in = tmp/$*-filtered.xml
+out/%.txt: out = out/$*.txt
+out/%.txt: xsl = $(text_style)
+out/%.txt: tmp/%-filtered.xml $(text_deps)
 	$(xsl_proc)
 
-%.fo: in = $*-filtered.xml
-%.fo: out = $*.fo
-%.fo: xsl = $(fo_style)
-%.fo: %-filtered.xml $(pdf_deps)
+tmp/%.fo: in = tmp/$*-filtered.xml
+tmp/%.fo: out = tmp/$*.fo
+tmp/%.fo: xsl = $(fo_style)
+tmp/%.fo: tmp/%-filtered.xml $(pdf_deps)
 	$(xsl_proc)
 
-%.pdf: in = $*.fo
-%.pdf: out = $*.pdf
-%.pdf: %.fo
+out/%.pdf: in = tmp/$*.fo
+out/%.pdf: out = out/$*.pdf
+out/%.pdf: tmp/%.fo
 	$(pdf_proc)
 
-%.rtf: in = $*.fo
-%.rtf: out = $*.rtf
-%.rtf: %.fo
+out/%.rtf: in = tmp/$*.fo
+out/%.rtf: out = out/$*.rtf
+out/%.rtf: tmp/%.fo
 	$(rtf_proc)
 
 %-140.xml: in = $*.xml
@@ -187,22 +184,7 @@ clean-%:
 %-140.xml: %.xml
 	$(xsl_proc)
 
-%-filtered.xml: in = $*.xml
-%-filtered.xml: out = $*-filtered.xml
-%-filtered.xml: %.xml
+tmp/%-filtered.xml: in = cv-multilingual.xml
+tmp/%-filtered.xml: out = tmp/$*-filtered.xml
+tmp/%-filtered.xml: cv-multilingual.xml
 	$(filter_proc)
-	$(make) all resume=$*-filtered
-
-cv-fr-filtered.xml: in = cv-multilingual.xml
-cv-fr-filtered.xml: out = cv-fr-filtered.xml
-cv-fr-filtered.xml: filter_targets = fr abroad
-cv-fr-filtered.xml: cv-multilingual.xml
-	$(filter_proc)
-	$(make) all resume=cv-fr-filtered
-
-cv-en-filtered.xml: in = cv-multilingual.xml
-cv-en-filtered.xml: out = cv-en-filtered.xml
-cv-en-filtered.xml: filter_targets = en abroad
-cv-en-filtered.xml: cv-multilingual.xml
-	$(filter_proc)
-	$(make) all resume=cv-en-filtered
