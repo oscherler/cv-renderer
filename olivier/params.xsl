@@ -174,7 +174,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <!-- Bullet Symbol -->
   <xsl:param name="bullet.glyph">&#x2022;</xsl:param>
   <!-- Space between bullet and its text in bulleted item -->
-  <xsl:param name="bullet.space">1.0em</xsl:param>
+  <xsl:param name="bullet.space">12pt</xsl:param>
+  <xsl:param name="bullet.sep">4pt</xsl:param>
 
   <xsl:param name="header.name.font.style">normal</xsl:param>
   <xsl:param name="header.name.font.weight" select="$global.bold.weight"/>

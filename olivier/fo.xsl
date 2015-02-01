@@ -345,7 +345,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:template match="r:projects">
     <xsl:param name="indent" select="$body.indent"/>
     <fo:list-block space-after="{$para.break.space}" start-indent="{$project.list.indent}"
-      provisional-distance-between-starts="{$bullet.space}">
+      provisional-distance-between-starts="{$bullet.space}" provisional-label-separation="{$bullet.sep}">
       <xsl:apply-templates select="r:project"/>
     </fo:list-block>
   </xsl:template>
@@ -373,7 +373,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <!-- Format the achievements section as a bullet list *SE* -->
   <xsl:template match="r:achievements">
     <fo:list-block space-after="{$para.break.space}" start-indent="{$project.list.indent}"
-      provisional-distance-between-starts="{$bullet.space}">
+      provisional-distance-between-starts="{$bullet.space}" provisional-label-separation="{$bullet.sep}">
       <xsl:for-each select="r:achievement">
         <xsl:call-template name="bulletListItem"><xsl:with-param name="indent" select="$project.list.indent"/></xsl:call-template>
       </xsl:for-each>
@@ -502,8 +502,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </fo:block>
         <xsl:if test="r:skill">
           <fo:list-block space-after="{$para.break.space}"
-            provisional-distance-between-starts="{$para.break.space}"
-            provisional-label-separation="{$bullet.space}">
+            provisional-distance-between-starts="{$bullet.space}"
+             provisional-label-separation="{$bullet.sep}">
             <xsl:apply-templates select="r:skill" mode="bullet"/>
           </fo:list-block>
         </xsl:if>
@@ -511,8 +511,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <!-- The following block should be removed in a future version. -->
         <xsl:if test="r:skills">
           <fo:list-block space-after="{$para.break.space}"
-            provisional-distance-between-starts="{$para.break.space}"
-            provisional-label-separation="{$bullet.space}">
+            provisional-distance-between-starts="{$bullet.space}"
+            provisional-label-separation="{$bullet.sep}">
             <xsl:apply-templates select="r:skills" mode="bullet"/>
           </fo:list-block>
         </xsl:if>
