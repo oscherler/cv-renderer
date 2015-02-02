@@ -521,6 +521,41 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsl:choose>
   </xsl:template>
 
+  <!-- Format the referees -->
+  <xsl:template match="r:referees">
+    <xsl:call-template name="heading">
+      <xsl:with-param name="text"><xsl:value-of select="$referees.word"/></xsl:with-param>
+    </xsl:call-template>
+    <xsl:choose>
+      <xsl:when test="$referees.display = 1">
+        <xsl:choose>
+          <xsl:when test="$referees.layout = 'compact'">
+            <fo:table table-layout="fixed" width="90%">
+              <fo:table-column width="40%"/>
+              <fo:table-column width="40%"/>
+              <fo:table-body>
+                <xsl:apply-templates select="r:referee" mode="compact"/>
+              </fo:table-body>
+            </fo:table>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates select="r:referee" mode="standard"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <fo:block space-after="{$para.break.space}">
+          <xsl:value-of select="$referees.hidden.phrase"/>
+        </fo:block>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="$referees.no_contact = 1">
+      <fo:block space-after="{$para.break.space}">
+        <xsl:value-of select="$referees.no_contact.phrase"/>
+      </fo:block>
+    </xsl:if>
+  </xsl:template>
+
 <!-- link -> make link from href attribute -->
   <xsl:template match="r:link">
     <fo:basic-link text-decoration="underline">

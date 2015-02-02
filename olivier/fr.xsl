@@ -66,6 +66,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="title.separator"> : </xsl:param>
 
   <xsl:param name="referees.hidden.phrase">Disponibles sur demande.</xsl:param>
+  <xsl:param name="referees.no_contact.phrase">Merci de ne pas contacter mon employeur actuel directement.</xsl:param>
 
   <!-- Format a date. -->
   <xsl:template match="r:date">

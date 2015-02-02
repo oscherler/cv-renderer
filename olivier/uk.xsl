@@ -82,6 +82,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="referees.hidden.phrase">Available upon request.</xsl:param>
   <xsl:param name="last-modified.phrase">Last modified</xsl:param>
 
+  <xsl:param name="referees.no_contact.phrase">Please, do not contact my current employer directly.</xsl:param>
+
   <!-- Instant messenger service names -->
   <!-- (When you add or remove a service here, don't forget to update
   ../../lib/common.xsl and element.instantMessage.xml in the user guide.)
