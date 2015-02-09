@@ -161,11 +161,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xsl:template name="contact-data">
     <xsl:param name="field"/>
-    <xsl:param name="link" select="0"/>
+    <xsl:param name="link" select="''"/>
     <fo:block>
       <xsl:choose>
-        <xsl:when test="$link = 1">
-	      <fo:basic-link external-destination="{$field}">
+        <xsl:when test="string-length( $link ) > 0">
+	      <fo:basic-link external-destination="{$link}">
 	    	<xsl:value-of select="$field"/>
           </fo:basic-link>
         </xsl:when>
@@ -192,6 +192,10 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <xsl:call-template name="contact-data">
       <xsl:with-param name="field">
         <xsl:apply-templates/>
+      </xsl:with-param>
+      <xsl:with-param name="link">
+      	<xsl:text>tel:</xsl:text>
+      	<xsl:value-of select="translate( ., ' ', '' )"/>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -243,7 +247,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsl:with-param name="field">
         <xsl:apply-templates/>
       </xsl:with-param>
-      <xsl:with-param name="link" select="1"/>
+      <xsl:with-param name="link">
+        <xsl:text>mailto:</xsl:text><xsl:apply-templates/>
+      </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
@@ -260,7 +266,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsl:with-param name="field">
         <xsl:apply-templates/>
       </xsl:with-param>
-      <xsl:with-param name="link" select="1"/>
+      <xsl:with-param name="link">
+        <xsl:apply-templates/>
+      </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
