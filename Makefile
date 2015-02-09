@@ -117,9 +117,8 @@ filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.s
 
 default: pdf
 all: out/cv-fr.html out/cv-fr.txt tmp/cv-fr.fo out/cv-fr.pdf out/cv-en.html out/cv-en.txt tmp/cv-en.fo out/cv-en.pdf
-html: out/$(resume).html
-text: out/$(resume).txt
-fo: tmp/$(resume).fo
+html: out/cv-en.html out/cv-fr.html
+text: out/cv-en.txt out/cv-fr.txt
 pdf: out/cv-en.pdf out/cv-fr.pdf
 13x-140: $(resume)-140.xml
 rtf: out/$(resume).rtf
