@@ -115,7 +115,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="label.colon">:</xsl:param>
 
   <xsl:param name="achievements.word">Achievements</xsl:param>
-  <xsl:param name="projects.word">Mission</xsl:param>
+  <xsl:param name="projects.word">Missions</xsl:param>
   <xsl:param name="other.skills.word">Other Skills</xsl:param>
 
   <xsl:param name="title.separator">: </xsl:param>
