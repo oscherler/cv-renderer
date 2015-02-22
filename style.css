@@ -85,6 +85,11 @@ h2
 	font-size: 14pt;
 }
 
+h4
+{
+	font-weight: normal;
+}
+
 dl.jobs dt,
 dl.jobs dd,
 dl.degrees dt,
@@ -129,6 +134,7 @@ dd p
 
 dl.skillarea dt
 {
+	font-weight: bold;
 	float:  left;
 }
 
@@ -140,4 +146,10 @@ dl.skillarea dd
 dl.skillarea dd p
 {
 	margin-bottom:  0.3em;
+}
+
+.jobTitle,
+.degrees .title
+{
+	font-weight: bold;
 }
