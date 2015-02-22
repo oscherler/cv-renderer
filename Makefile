@@ -74,6 +74,8 @@ fo_style = olivier/$(country)-$(papersize).xsl
 pdf_deps = olivier/fo.xsl olivier/fr-a4.xsl olivier/fr.xsl olivier/params.xsl olivier/uk-a4.xsl olivier/uk.xsl
 html_deps = olivier/fr-html.xsl olivier/fr.xsl olivier/html.xsl olivier/params.xsl olivier/uk-html.xsl olivier/uk.xsl
 text_deps = olivier/fr-text.xsl olivier/fr.xsl olivier/params.xsl olivier/text.xsl olivier/uk-text.xsl olivier/uk.xsl
+out_dir = out
+tmp_dir = tmp
 
 upgrade_13x_140_style = $(xsl_base)/misc/13x-140.xsl
 
@@ -117,64 +119,64 @@ filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.s
 
 default: pdf
 all: out/cv-fr.html out/cv-fr.txt tmp/cv-fr.fo out/cv-fr.pdf out/cv-en.html out/cv-en.txt tmp/cv-en.fo out/cv-en.pdf
-html: out/cv-en.html out/cv-fr.html
-text: out/cv-en.txt out/cv-fr.txt
-pdf: out/cv-en.pdf out/cv-fr.pdf
+html: $(out_dir)/cv-en.html $(out_dir)/cv-fr.html
+text: $(out_dir)/cv-en.txt $(out_dir)/cv-fr.txt
+pdf: $(out_dir)/cv-en.pdf $(out_dir)/cv-fr.pdf
 13x-140: $(resume)-140.xml
-rtf: out/$(resume).rtf
-filter: tmp/$(resume)-filtered.xml
+rtf: $(out_dir)/$(resume).rtf
+filter: $(tmp_dir)/$(resume)-filtered.xml
 
 fonts:
 	java org.apache.fop.tools.fontlist.FontListMain -c fop.xconf
 
-tmp/cv-en-filtered.xml: filter_targets = en abroad
-tmp/cv-en.fo: country = uk
-out/cv-en.pdf: country = uk
-out/cv-en.txt: country = uk
-out/cv-en.html: country = uk
+$(tmp_dir)/cv-en-filtered.xml: filter_targets = en abroad
+$(tmp_dir)/cv-en.fo: country = uk
+$(out_dir)/cv-en.pdf: country = uk
+$(out_dir)/cv-en.txt: country = uk
+$(out_dir)/cv-en.html: country = uk
 
-tmp/cv-fr-filtered.xml: filter_targets = fr abroad
-tmp/cv-fr.fo: country = fr
-out/cv-fr.pdf: country = fr
-out/cv-fr.txt: country = fr
-out/cv-fr.html: country = fr
+$(tmp_dir)/cv-fr-filtered.xml: filter_targets = fr abroad
+$(tmp_dir)/cv-fr.fo: country = fr
+$(out_dir)/cv-fr.pdf: country = fr
+$(out_dir)/cv-fr.txt: country = fr
+$(out_dir)/cv-fr.html: country = fr
 
 clean: clean-cv-fr clean-cv-en
 
 clean-%:
-	rm -f out/$*.html
-	rm -f out/$*.txt
-	rm -f tmp/$*.fo
-	rm -f out/$*.pdf
-	rm -f out/$*.rtf
-	rm -f tmp/$*-filtered.xml
+	rm -f $(out_dir)/$*.html
+	rm -f $(out_dir)/$*.txt
+	rm -f $(tmp_dir)/$*.fo
+	rm -f $(out_dir)/$*.pdf
+	rm -f $(out_dir)/$*.rtf
+	rm -f $(tmp_dir)/$*-filtered.xml
 
-out/%.html: in = tmp/$*-filtered.xml
-out/%.html: out = out/$*.html
-out/%.html: xsl = $(html_style)
-out/%.html: tmp/%-filtered.xml $(html_deps)
+$(out_dir)/%.html: in = $(tmp_dir)/$*-filtered.xml
+$(out_dir)/%.html: out = $(out_dir)/$*.html
+$(out_dir)/%.html: xsl = $(html_style)
+$(out_dir)/%.html: $(out_dir) $(tmp_dir)/%-filtered.xml $(html_deps)
 	$(xsl_proc)
 
-out/%.txt: in = tmp/$*-filtered.xml
-out/%.txt: out = out/$*.txt
-out/%.txt: xsl = $(text_style)
-out/%.txt: tmp/%-filtered.xml $(text_deps)
+$(out_dir)/%.txt: in = $(tmp_dir)/$*-filtered.xml
+$(out_dir)/%.txt: out = $(out_dir)/$*.txt
+$(out_dir)/%.txt: xsl = $(text_style)
+$(out_dir)/%.txt: $(out_dir) $(tmp_dir)/%-filtered.xml $(text_deps)
 	$(xsl_proc)
 
-tmp/%.fo: in = tmp/$*-filtered.xml
-tmp/%.fo: out = tmp/$*.fo
-tmp/%.fo: xsl = $(fo_style)
-tmp/%.fo: tmp/%-filtered.xml $(pdf_deps)
+$(tmp_dir)/%.fo: in = $(tmp_dir)/$*-filtered.xml
+$(tmp_dir)/%.fo: out = $(tmp_dir)/$*.fo
+$(tmp_dir)/%.fo: xsl = $(fo_style)
+$(tmp_dir)/%.fo: $(tmp_dir)/%-filtered.xml $(pdf_deps)
 	$(xsl_proc)
 
-out/%.pdf: in = tmp/$*.fo
-out/%.pdf: out = out/$*.pdf
-out/%.pdf: tmp/%.fo
+$(out_dir)/%.pdf: in = $(tmp_dir)/$*.fo
+$(out_dir)/%.pdf: out = $(out_dir)/$*.pdf
+$(out_dir)/%.pdf: $(out_dir) $(tmp_dir)/%.fo
 	$(pdf_proc)
 
-out/%.rtf: in = tmp/$*.fo
-out/%.rtf: out = out/$*.rtf
-out/%.rtf: tmp/%.fo
+$(out_dir)/%.rtf: in = $(tmp_dir)/$*.fo
+$(out_dir)/%.rtf: out = $(out_dir)/$*.rtf
+$(out_dir)/%.rtf: $(out_dir) $(tmp_dir)/%.fo
 	$(rtf_proc)
 
 %-140.xml: in = $*.xml
@@ -183,7 +185,15 @@ out/%.rtf: tmp/%.fo
 %-140.xml: %.xml
 	$(xsl_proc)
 
-tmp/%-filtered.xml: in = cv-multilingual.xml
-tmp/%-filtered.xml: out = tmp/$*-filtered.xml
-tmp/%-filtered.xml: cv-multilingual.xml
+$(tmp_dir)/%-filtered.xml: in = cv-multilingual.xml
+$(tmp_dir)/%-filtered.xml: out = $(tmp_dir)/$*-filtered.xml
+$(tmp_dir)/%-filtered.xml: $(tmp_dir) cv-multilingual.xml
 	$(filter_proc)
+
+# make out directory
+$(out_dir):
+	mkdir -p $(out_dir)
+
+# make tmp directory
+$(tmp_dir):
+	mkdir -p $(tmp_dir)
