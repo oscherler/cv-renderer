@@ -50,4 +50,36 @@ In general, each block is responsible for outputting a newline after itself.
 
   <xsl:include href="params.xsl"/>
 
+  <!-- Format the referees -->
+  <xsl:template match="r:referees">
+    <xsl:call-template name="Heading">
+      <xsl:with-param name="Text" select="$referees.word"/>
+    </xsl:call-template>
+
+    <xsl:call-template name="Indent">
+      <xsl:with-param name="Text">
+        <xsl:choose>
+
+          <xsl:when test="$referees.display = 1">
+            <xsl:apply-templates select="r:referee"/>
+          </xsl:when>
+
+          <xsl:otherwise>
+            <xsl:call-template name="Wrap">
+              <xsl:with-param name="Text">
+                <xsl:value-of select="$referees.hidden.phrase"/>
+              </xsl:with-param>
+            </xsl:call-template>
+            <xsl:call-template name="NewLine"/>
+          </xsl:otherwise>
+
+        </xsl:choose>
+        <xsl:if test="$referees.no_contact = 1">
+          <xsl:call-template name="NewLine"/>
+          <xsl:value-of select="$referees.no_contact.phrase"/>
+        </xsl:if>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
 </xsl:stylesheet>

@@ -421,6 +421,41 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsl:choose>
   </xsl:template>
 
+<!-- Format the referees -->
+  <xsl:template match="r:referees">
+    <xsl:call-template name="Heading">
+      <xsl:with-param name="Text">
+        <xsl:value-of select="$referees.word"/>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:choose>
+      <xsl:when test="$referees.display = 1">
+        <xsl:choose>
+	  <xsl:when test="$referees.layout = 'compact'">
+            <table class="referees">
+              <xsl:apply-templates select="r:referee" mode="compact"/>
+            </table>
+          </xsl:when>
+	  <xsl:otherwise>
+	    <div class="referees">
+	      <xsl:apply-templates select="r:referee" mode="standard"/>
+	    </div>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <p>
+          <xsl:value-of select="$referees.hidden.phrase"/>
+        </p>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="$referees.no_contact = 1">
+      <p>
+        <xsl:value-of select="$referees.no_contact.phrase"/>
+      </p>
+    </xsl:if>
+  </xsl:template>
+  
   <xsl:template match="r:copyright"/>
 
 </xsl:stylesheet>
