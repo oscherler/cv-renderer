@@ -71,11 +71,13 @@ html_style = olivier/$(country)-html.xsl
 text_style = olivier/$(country)-text.xsl
 fo_style = olivier/$(country)-$(papersize).xsl
 
-pdf_deps = olivier/fo.xsl olivier/fr-a4.xsl olivier/fr.xsl olivier/params.xsl olivier/uk-a4.xsl olivier/uk.xsl
-html_deps = olivier/fr-html.xsl olivier/fr.xsl olivier/html.xsl olivier/params.xsl olivier/uk-html.xsl olivier/uk.xsl
-text_deps = olivier/fr-text.xsl olivier/fr.xsl olivier/params.xsl olivier/text.xsl olivier/uk-text.xsl olivier/uk.xsl
 out_dir = out
 tmp_dir = tmp
+
+common_deps = olivier/params.xsl olivier/fr.xsl olivier/uk.xsl
+pdf_deps = $(common_deps) olivier/fo.xsl olivier/fr-a4.xsl olivier/uk-a4.xsl
+html_deps = $(common_deps) olivier/html.xsl olivier/fr-html.xsl olivier/uk-html.xsl $(out_dir)/style.css $(out_fonts)
+text_deps = $(common_deps) olivier/text.xsl olivier/fr-text.xsl olivier/uk-text.xsl
 
 upgrade_13x_140_style = $(xsl_base)/misc/13x-140.xsl
 
@@ -118,10 +120,12 @@ filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.s
 .PHONY: all html text fo pdf clean 13x-140 fonts
 
 default: pdf
-all: out/cv-fr.html out/cv-fr.txt tmp/cv-fr.fo out/cv-fr.pdf out/cv-en.html out/cv-en.txt tmp/cv-en.fo out/cv-en.pdf
+all: html text pdf
+
 html: $(out_dir)/cv-en.html $(out_dir)/cv-fr.html
 text: $(out_dir)/cv-en.txt $(out_dir)/cv-fr.txt
 pdf: $(out_dir)/cv-en.pdf $(out_dir)/cv-fr.pdf
+
 13x-140: $(resume)-140.xml
 rtf: $(out_dir)/$(resume).rtf
 filter: $(tmp_dir)/$(resume)-filtered.xml
