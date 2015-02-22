@@ -82,4 +82,6 @@ In general, each block is responsible for outputting a newline after itself.
     </xsl:call-template>
   </xsl:template>
 
+  <xsl:template match="r:copyright"/>
+
 </xsl:stylesheet>
