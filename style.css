@@ -88,6 +88,8 @@ h2
 h4
 {
 	font-weight: normal;
+	margin-top: 0.5em;
+	margin-bottom: 0;
 }
 
 dl.jobs dt,
@@ -152,4 +154,10 @@ dl.skillarea dd p
 .degrees .title
 {
 	font-weight: bold;
+}
+
+ul.projects,
+ul.achievements
+{
+	margin-top: 0.5em;
 }
