@@ -1,72 +1,9 @@
-# Makefile
-#
-# Makefile for resumes
-#
-# Modification by Olivier Scherler
-# Copyright (c) 2002 Bruce Christensen
-# All rights reserved.
-# 
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-# 
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 
-# THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-# PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS
-# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#------------------------------------------------------------------------------
-# To create example.html, example.txt, example.fo, and example.pdf from
-# example.xml, with Italian localization and a4 paper size, use this command:
-#
-# 	gmake resume=example country=it papersize=a4
-#
-# To generate just the html version of cv.xml with UK localization, use this
-# command:
-#
-# 	gmake html resume=cv country=uk
-#
-# To remove all generated files, run:
-#
-# 	gmake clean
-#------------------------------------------------------------------------------
-
-#------------------------------------------------------------------------------
-# Basename (filename minus .xml extension) of resume to process
-# For example, put "myresume" here to process "myresume.xml".
-#------------------------------------------------------------------------------
-resume = cv-fr
-
-#------------------------------------------------------------------------------
-# Stylesheets
-#------------------------------------------------------------------------------
 # Options: br de fr it nl uk us es
 country = fr
+
 # Options: letter for country=us, a4 for others
 papersize = a4
 
-#xsl_base = http://xmlresume.sourceforge.net/xsl
-#xsl_base = ../xsl
-#xsl_base = ../src/www/xsl
-xsl_base = resume-1_5_1/xsl
-
-#html_style = $(xsl_base)/output/$(country)-html.xsl
-#text_style = $(xsl_base)/output/$(country)-text.xsl
-#fo_style = $(xsl_base)/output/$(country)-$(papersize).xsl
 html_style = olivier/$(country)-html.xsl
 text_style = olivier/$(country)-text.xsl
 fo_style = olivier/$(country)-$(papersize).xsl
@@ -86,8 +23,6 @@ common_deps = olivier/params.xsl olivier/fr.xsl olivier/uk.xsl
 pdf_deps = $(common_deps) olivier/fo.xsl olivier/fr-a4.xsl olivier/uk-a4.xsl
 html_deps = $(common_deps) olivier/html.xsl olivier/fr-html.xsl olivier/uk-html.xsl $(out_dir)/style.css $(out_fonts)
 text_deps = $(common_deps) olivier/text.xsl olivier/fr-text.xsl olivier/uk-text.xsl
-
-upgrade_13x_140_style = $(xsl_base)/misc/13x-140.xsl
 
 fo_flags = -c fop.xconf
 
@@ -118,7 +53,7 @@ rtf_proc = java com.xmlmind.fo.converter.Driver $(in) $(out)
 # "targets" attribute) are always included.  
 # Take a look at example2.xml and try changing the filter targets to get a 
 # feel for how the filter works.
-filter_targets = foodservice carpentry
+filter_targets = test
 filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.sourceforge.xmlresume.filter.Filter -in $(in) -out $(out) $(filter_targets)
 
 #------------------------------------------------------------------------------
@@ -133,23 +68,20 @@ filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.s
 default: pdf
 all: html text pdf
 
+# formats
 html: $(out_dir)/cv-en.html $(out_dir)/cv-fr.html
 text: $(out_dir)/cv-en.txt $(out_dir)/cv-fr.txt
 pdf: $(out_dir)/cv-en.pdf $(out_dir)/cv-fr.pdf
+rtf: $(out_dir)/cv-en.rtf $(out_dir)/cv-fr.rtf
 
-13x-140: $(resume)-140.xml
-rtf: $(out_dir)/$(resume).rtf
-filter: $(tmp_dir)/$(resume)-filtered.xml
-
-fonts:
-	java org.apache.fop.tools.fontlist.FontListMain -c fop.xconf
-
+# fr
 $(tmp_dir)/cv-en-filtered.xml: filter_targets = en abroad
 $(tmp_dir)/cv-en.fo: country = uk
 $(out_dir)/cv-en.pdf: country = uk
 $(out_dir)/cv-en.txt: country = uk
 $(out_dir)/cv-en.html: country = uk
 
+# en
 $(tmp_dir)/cv-fr-filtered.xml: filter_targets = fr abroad
 $(tmp_dir)/cv-fr.fo: country = fr
 $(out_dir)/cv-fr.pdf: country = fr
@@ -166,40 +98,40 @@ clean-%:
 	rm -f $(out_dir)/$*.rtf
 	rm -f $(tmp_dir)/$*-filtered.xml
 
+# html
 $(out_dir)/%.html: in = $(tmp_dir)/$*-filtered.xml
 $(out_dir)/%.html: out = $(out_dir)/$*.html
 $(out_dir)/%.html: xsl = $(html_style)
 $(out_dir)/%.html: $(out_dir) $(tmp_dir)/%-filtered.xml $(html_deps)
 	$(xsl_proc)
 
+# txt
 $(out_dir)/%.txt: in = $(tmp_dir)/$*-filtered.xml
 $(out_dir)/%.txt: out = $(out_dir)/$*.txt
 $(out_dir)/%.txt: xsl = $(text_style)
 $(out_dir)/%.txt: $(out_dir) $(tmp_dir)/%-filtered.xml $(text_deps)
 	$(xsl_proc)
 
+# fo
 $(tmp_dir)/%.fo: in = $(tmp_dir)/$*-filtered.xml
 $(tmp_dir)/%.fo: out = $(tmp_dir)/$*.fo
 $(tmp_dir)/%.fo: xsl = $(fo_style)
 $(tmp_dir)/%.fo: $(tmp_dir)/%-filtered.xml $(pdf_deps)
 	$(xsl_proc)
 
+# pdf
 $(out_dir)/%.pdf: in = $(tmp_dir)/$*.fo
 $(out_dir)/%.pdf: out = $(out_dir)/$*.pdf
 $(out_dir)/%.pdf: $(out_dir) $(tmp_dir)/%.fo
 	$(pdf_proc)
 
+# rtf
 $(out_dir)/%.rtf: in = $(tmp_dir)/$*.fo
 $(out_dir)/%.rtf: out = $(out_dir)/$*.rtf
 $(out_dir)/%.rtf: $(out_dir) $(tmp_dir)/%.fo
 	$(rtf_proc)
 
-%-140.xml: in = $*.xml
-%-140.xml: out = $*-140.xml
-%-140.xml: xsl = $(upgrade_13x_140_style)
-%-140.xml: %.xml
-	$(xsl_proc)
-
+# filter
 $(tmp_dir)/%-filtered.xml: in = cv-multilingual.xml
 $(tmp_dir)/%-filtered.xml: out = $(tmp_dir)/$*-filtered.xml
 $(tmp_dir)/%-filtered.xml: $(tmp_dir) cv-multilingual.xml
@@ -224,3 +156,7 @@ $(out_fonts_dir):
 # copy web fonts
 $(out_fonts_dir)/%: $(out_fonts_dir) $(in_fonts_dir)/%
 	cp $(in_fonts_dir)/$* $(out_fonts_dir)/$*
+
+# list fonts available to FOP
+list-fonts:
+	java org.apache.fop.tools.fontlist.FontListMain -c fop.xconf
