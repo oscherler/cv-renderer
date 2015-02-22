@@ -10,6 +10,7 @@ fo_style = olivier/$(country)-$(papersize).xsl
 
 out_dir = out
 tmp_dir = tmp
+upload_dir = upload
 
 # web fonts to copy to output
 # source
@@ -23,6 +24,14 @@ common_deps = olivier/params.xsl olivier/fr.xsl olivier/uk.xsl
 pdf_deps = $(common_deps) olivier/fo.xsl olivier/fr-a4.xsl olivier/uk-a4.xsl
 html_deps = $(common_deps) olivier/html.xsl olivier/fr-html.xsl olivier/uk-html.xsl $(out_dir)/style.css $(out_fonts)
 text_deps = $(common_deps) olivier/text.xsl olivier/fr-text.xsl olivier/uk-text.xsl
+
+# final names (online)
+fn_en_pdf = Olivier\ Scherler\ CV\ English.pdf
+fn_en_html = Olivier\ Scherler\ CV\ English.html
+fn_en_txt = Olivier\ Scherler\ CV\ English.txt
+fn_fr_pdf = Olivier\ Scherler\ CV\ Français.pdf
+fn_fr_html = Olivier\ Scherler\ CV\ Français.html
+fn_fr_txt = Olivier\ Scherler\ CV\ Français.txt
 
 fo_flags = -c fop.xconf
 
@@ -60,7 +69,7 @@ filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.s
 # End configurable parameters
 #------------------------------------------------------------------------------
 
-.PHONY: all html text fo pdf clean 13x-140 fonts
+.PHONY: all html text pdf rtf clean list-fonts upload_files sync
 
 # otherwise Make will remove them after running as it considers them intermediate
 .SECONDARY: $(out_fonts)
@@ -149,6 +158,10 @@ $(out_dir):
 $(tmp_dir):
 	mkdir -p $(tmp_dir)
 
+# make upload directory
+$(upload_dir):
+	mkdir -p $(upload_dir)
+
 # make output fonts directory
 $(out_fonts_dir):
 	mkdir -p $(out_fonts_dir)
@@ -160,3 +173,45 @@ $(out_fonts_dir)/%: $(out_fonts_dir) $(in_fonts_dir)/%
 # list fonts available to FOP
 list-fonts:
 	java org.apache.fop.tools.fontlist.FontListMain -c fop.xconf
+
+# remove referees from xml
+$(out_dir)/cv.xml: cv-multilingual.xml deref.php
+	php deref.php cv-multilingual.xml out/cv.xml
+
+# copy online files to upload dir
+upload_files: $(upload_dir) $(upload_dir)/$(fn_en_pdf) $(upload_dir)/$(fn_fr_pdf) $(upload_dir)/$(fn_en_txt) $(upload_dir)/$(fn_fr_txt) $(upload_dir)/$(fn_en_html) $(upload_dir)/$(fn_fr_html) $(upload_dir)/Source\ CV.xml
+
+# English pdf
+$(upload_dir)/$(fn_en_pdf): src = cv-en.pdf
+$(upload_dir)/$(fn_en_pdf): $(out_dir)/cv-en.pdf
+# French pdf
+$(upload_dir)/$(fn_fr_pdf): src = cv-fr.pdf
+$(upload_dir)/$(fn_fr_pdf): $(out_dir)/cv-fr.pdf
+# English txt
+$(upload_dir)/$(fn_en_txt): src = cv-en.txt
+$(upload_dir)/$(fn_en_txt): $(out_dir)/cv-en.txt
+# French txt
+$(upload_dir)/$(fn_fr_txt): src = cv-fr.txt
+$(upload_dir)/$(fn_fr_txt): $(out_dir)/cv-fr.txt
+# English html
+$(upload_dir)/$(fn_en_html): src = cv-en.html
+$(upload_dir)/$(fn_en_html): $(out_dir)/cv-en.html
+# French html
+$(upload_dir)/$(fn_fr_html): src = cv-fr.html
+$(upload_dir)/$(fn_fr_html): $(out_dir)/cv-fr.html
+# Source xml
+$(upload_dir)/Source\ CV.xml: src = cv.xml
+$(upload_dir)/Source\ CV.xml: $(out_dir)/cv.xml
+
+# upload copy rule
+$(upload_dir)/%: $(src)
+	cp $(out_dir)/$(src) '$(upload_dir)/$*'
+
+# upload
+sync: upload_files $(out_fonts) $(out_dir)/style.css
+	# main files
+	rsync -avz upload/ its:domains/olivier.ithink.ch/www/cv/_public/
+	# fonts
+	rsync -avz out/fonts/ its:domains/olivier.ithink.ch/www/cv/fonts/
+	# css
+	scp out/style.css its:domains/olivier.ithink.ch/www/cv/style.css
