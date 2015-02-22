@@ -74,6 +74,14 @@ fo_style = olivier/$(country)-$(papersize).xsl
 out_dir = out
 tmp_dir = tmp
 
+# web fonts to copy to output
+# source
+in_fonts_dir = Bergamo-Std-fontfacekit
+in_fonts = $(wildcard $(in_fonts_dir)/*.eot $(in_fonts_dir)/*.svg $(in_fonts_dir)/*.ttf $(in_fonts_dir)/*.woff)
+# destination
+out_fonts_dir = $(out_dir)/fonts
+out_fonts = $(patsubst $(in_fonts_dir)/%,$(out_fonts_dir)/%,$(in_fonts))
+
 common_deps = olivier/params.xsl olivier/fr.xsl olivier/uk.xsl
 pdf_deps = $(common_deps) olivier/fo.xsl olivier/fr-a4.xsl olivier/uk-a4.xsl
 html_deps = $(common_deps) olivier/html.xsl olivier/fr-html.xsl olivier/uk-html.xsl $(out_dir)/style.css $(out_fonts)
@@ -118,6 +126,9 @@ filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.s
 #------------------------------------------------------------------------------
 
 .PHONY: all html text fo pdf clean 13x-140 fonts
+
+# otherwise Make will remove them after running as it considers them intermediate
+.SECONDARY: $(out_fonts)
 
 default: pdf
 all: html text pdf
@@ -194,6 +205,10 @@ $(tmp_dir)/%-filtered.xml: out = $(tmp_dir)/$*-filtered.xml
 $(tmp_dir)/%-filtered.xml: $(tmp_dir) cv-multilingual.xml
 	$(filter_proc)
 
+# copy CSS file
+$(out_dir)/style.css: $(out_dir) style.css
+	cp style.css $(out_dir)/style.css
+
 # make out directory
 $(out_dir):
 	mkdir -p $(out_dir)
@@ -201,3 +216,11 @@ $(out_dir):
 # make tmp directory
 $(tmp_dir):
 	mkdir -p $(tmp_dir)
+
+# make output fonts directory
+$(out_fonts_dir):
+	mkdir -p $(out_fonts_dir)
+
+# copy web fonts
+$(out_fonts_dir)/%: $(out_fonts_dir) $(in_fonts_dir)/%
+	cp $(in_fonts_dir)/$* $(out_fonts_dir)/$*
