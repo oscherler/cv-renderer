@@ -185,13 +185,13 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="header.item.font.style">normal</xsl:param>
   <xsl:param name="header.item.font.weight" select="$global.bold.weight"/>
 
-  <xsl:param name="body.font.size">11pt</xsl:param>
+  <xsl:param name="body.font.size">10pt</xsl:param>
   <xsl:param name="body.font.family" select="$global.font.family"/>
 
   <xsl:param name="footer.font.size">8pt</xsl:param>
   <xsl:param name="footer.font.family">serif</xsl:param>
 
-  <xsl:param name="heading.font.size">14pt</xsl:param>
+  <xsl:param name="heading.font.size">13pt</xsl:param>
   <xsl:param name="heading.font.family" select="$global.font.family"/>
   <xsl:param name="heading.font.weight" select="$global.bold.weight"/>
   <xsl:param name="heading.border.bottom.style">none</xsl:param>
