@@ -582,4 +582,10 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xsl:template match="r:copyright"/>
 
+ <xsl:template match="r:sup">
+        <fo:inline font-size="8pt" vertical-align="super">
+            <xsl:apply-templates/>
+            </fo:inline>
+    </xsl:template>
+
 </xsl:stylesheet>
