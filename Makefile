@@ -40,8 +40,11 @@ fo_flags = -c fop.xconf
 #------------------------------------------------------------------------------
 make = make
 
-xsl_proc = java org.apache.xalan.xslt.Process $(xsl_flags) -in $(in) -xsl $(xsl) -out $(out)
-#xsl_proc = java com.icl.saxon.StyleSheet $(xsl_flags) -o $(out) $(in) $(xsl) $(xsl_params)
+MY_FOP_HOME=fop-1.1
+MY_CLASSPATH=resume-1_5_1/java/xmlresume-filter.jar:$(FOP_HOME)/build/fop.jar:$(FOP_HOME)/lib/*:$(CLASSPATH)
+
+xsl_proc = java -cp $(MY_CLASSPATH) org.apache.xalan.xslt.Process $(xsl_flags) -in $(in) -xsl $(xsl) -out $(out)
+#xsl_proc = java -cp $(MY_CLASSPATH) com.icl.saxon.StyleSheet $(xsl_flags) -o $(out) $(in) $(xsl) $(xsl_params)
 
 xmllint = xmllint --format --output $(out) $(out)
 
@@ -51,8 +54,8 @@ pdf_proc = $(FOP_HOME)/fop $(fo_flags) -fo $(in) -pdf $(out)
 # RTF generation currently requires you download a separate, closed source jar 
 # file and add it to your java classpath: 	
 # http://www.xmlmind.com/foconverter/downloadperso.shtml
-rtf_proc = java com.xmlmind.fo.converter.Driver $(in) $(out)
-#rtf_proc = java ch.codeconsult.jfor.main.CmdLineConverter $(in) $(out)
+rtf_proc = java -cp $(MY_CLASSPATH) com.xmlmind.fo.converter.Driver $(in) $(out)
+#rtf_proc = java -cp $(MY_CLASSPATH) ch.codeconsult.jfor.main.CmdLineConverter $(in) $(out)
 
 # Element filtering allows you to create targeted resumes.  
 # You can create your own targets; just specify them in your resume.xml 
@@ -63,7 +66,7 @@ rtf_proc = java com.xmlmind.fo.converter.Driver $(in) $(out)
 # Take a look at example2.xml and try changing the filter targets to get a 
 # feel for how the filter works.
 filter_targets = test
-filter_proc = java -cp resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH) net.sourceforge.xmlresume.filter.Filter -in $(in) -out $(out) $(filter_targets)
+filter_proc = java -cp $(MY_CLASSPATH) net.sourceforge.xmlresume.filter.Filter -in $(in) -out $(out) $(filter_targets)
 
 #------------------------------------------------------------------------------
 # End configurable parameters
@@ -172,7 +175,7 @@ $(out_fonts_dir)/%: $(out_fonts_dir) $(in_fonts_dir)/%
 
 # list fonts available to FOP
 list-fonts:
-	java org.apache.fop.tools.fontlist.FontListMain -c fop.xconf
+	java -cp $(MY_CLASSPATH) org.apache.fop.tools.fontlist.FontListMain -c fop.xconf
 
 # remove referees from xml
 $(out_dir)/cv.xml: cv-multilingual.xml deref.php
