@@ -6,7 +6,7 @@ This repository contains the scripts used to generate my CV from a single XML fi
 
 Clone the git repository:
 
-	git clone git@github.com/oscherler/cv-renderer
+	git clone --recursive https://github.com/oscherler/cv-renderer.git
 	cd cv-renderer
 
 Run `setup.sh` to download FOP and the source XML file for the CV:
