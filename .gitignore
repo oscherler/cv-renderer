@@ -1,5 +1,7 @@
 /tmp
 /remove
+/out
+/fop-1.1
 
 #*-filtered.xml
 #*.fo
