@@ -19,3 +19,5 @@ Generate the CV in the desired formats using any of the following commands:
 	make html
 	make text
 	make all
+
+The output files can be found in `out/`.
