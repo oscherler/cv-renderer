@@ -2,6 +2,7 @@
 /remove
 /out
 /fop-1.1
+/upload
 
 #*-filtered.xml
 #*.fo
