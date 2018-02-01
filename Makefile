@@ -130,48 +130,48 @@ fo_target = $(tmp_dir)/cv-%.fo
 pdf_target = $(out_dir)/cv-%.pdf
 rtf_target = $(out_dir)/cv-%.rtf
 
+# filter
+$(filtered_target): filter_targets = $* $(filters)
+$(filtered_target): in = $<
+$(filtered_target): out = $@
+$(filtered_target): cv-multilingual.xml $(tmp_dir)
+	$(filter_proc)
+
 # html
 $(html_target): country = $(country_$*)
+$(html_target): xsl = $(html_style)
 $(html_target): in = $<
 $(html_target): out = $@
-$(html_target): xsl = $(html_style)
 $(html_target): $(filtered_target) $(out_dir) $(html_deps)
 	$(xsl_proc)
 
 # txt
 $(txt_target): country = $(country_$*)
+$(txt_target): xsl = $(text_style)
 $(txt_target): in = $<
 $(txt_target): out = $@
-$(txt_target): xsl = $(text_style)
 $(txt_target): $(filtered_target) $(out_dir) $(text_deps)
 	$(xsl_proc)
 
 # fo
 $(fo_target): country = $(country_$*)
+$(fo_target): xsl = $(fo_style)
 $(fo_target): in = $<
 $(fo_target): out = $@
-$(fo_target): xsl = $(fo_style)
 $(fo_target): $(filtered_target) $(pdf_deps)
 	$(xsl_proc)
 
 # pdf
 $(pdf_target): in = $<
 $(pdf_target): out = $@
-$(pdf_target): $(tmp_dir)/%.fo $(out_dir)
+$(pdf_target): $(fo_target) $(out_dir)
 	$(pdf_proc)
 
 # rtf
 $(rtf_target): in = $<
 $(rtf_target): out = $@
-$(rtf_target): $(tmp_dir)/%.fo $(out_dir)
+$(rtf_target): $(fo_target) $(out_dir)
 	$(rtf_proc)
-
-# filter
-$(filtered_target): in = $<
-$(filtered_target): out = $@
-$(filtered_target): filter_targets = $* $(filters)
-$(filtered_target): cv-multilingual.xml $(tmp_dir)
-	$(filter_proc)
 
 # copy CSS file
 $(out_dir)/style.css: style.css $(out_dir)
