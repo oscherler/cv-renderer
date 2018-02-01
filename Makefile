@@ -20,7 +20,7 @@ in_fonts_dir = Bergamo-Std-fontfacekit
 in_fonts = $(wildcard $(in_fonts_dir)/*.eot $(in_fonts_dir)/*.svg $(in_fonts_dir)/*.ttf $(in_fonts_dir)/*.woff)
 # destination
 out_fonts_dir = $(out_dir)/fonts
-out_fonts = $(patsubst $(in_fonts_dir)/%,$(out_fonts_dir)/%,$(in_fonts))
+out_fonts = $(in_fonts:$(in_fonts_dir)/%=$(out_fonts_dir)/%)
 
 common_deps = $(theme)/common/*.xsl
 pdf_deps = $(common_deps) $(theme)/pdf/*.xsl
