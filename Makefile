@@ -124,59 +124,58 @@ clean-%:
 	rm -f $(tmp_dir)/$*-filtered.xml
 
 filtered_target = $(tmp_dir)/cv-%-filtered.xml
-filtered_file = $(tmp_dir)/cv-$*-filtered.xml
 html_target = $(out_dir)/cv-%.html
 txt_target = $(out_dir)/cv-%.txt
 fo_target = $(tmp_dir)/cv-%.fo
-pdf_target = $(out_dir)/%.pdf
-rtf_target = $(out_dir)/%.rtf
+pdf_target = $(out_dir)/cv-%.pdf
+rtf_target = $(out_dir)/cv-%.rtf
 
 # html
 $(html_target): country = $(country_$*)
-$(html_target): in = $(filtered_file)
-$(html_target): out = $(out_dir)/cv-$*.html
+$(html_target): in = $<
+$(html_target): out = $@
 $(html_target): xsl = $(html_style)
-$(html_target): $(out_dir) $(tmp_dir)/cv-%-filtered.xml $(html_deps)
+$(html_target): $(filtered_target) $(out_dir) $(html_deps)
 	$(xsl_proc)
 
 # txt
 $(txt_target): country = $(country_$*)
-$(txt_target): in = $(filtered_file)
-$(txt_target): out = $(out_dir)/cv-$*.txt
+$(txt_target): in = $<
+$(txt_target): out = $@
 $(txt_target): xsl = $(text_style)
-$(txt_target): $(out_dir) $(tmp_dir)/cv-%-filtered.xml $(text_deps)
+$(txt_target): $(filtered_target) $(out_dir) $(text_deps)
 	$(xsl_proc)
 
 # fo
 $(fo_target): country = $(country_$*)
-$(fo_target): in = $(filtered_file)
-$(fo_target): out = $(tmp_dir)/cv-$*.fo
+$(fo_target): in = $<
+$(fo_target): out = $@
 $(fo_target): xsl = $(fo_style)
-$(fo_target): $(tmp_dir)/cv-%-filtered.xml $(pdf_deps)
+$(fo_target): $(filtered_target) $(pdf_deps)
 	$(xsl_proc)
 
 # pdf
-$(pdf_target): in = $(tmp_dir)/$*.fo
-$(pdf_target): out = $(out_dir)/$*.pdf
-$(pdf_target): $(out_dir) $(tmp_dir)/%.fo
+$(pdf_target): in = $<
+$(pdf_target): out = $@
+$(pdf_target): $(tmp_dir)/%.fo $(out_dir)
 	$(pdf_proc)
 
 # rtf
-$(rtf_target): in = $(tmp_dir)/$*.fo
-$(rtf_target): out = $(out_dir)/$*.rtf
-$(rtf_target): $(out_dir) $(tmp_dir)/%.fo
+$(rtf_target): in = $<
+$(rtf_target): out = $@
+$(rtf_target): $(tmp_dir)/%.fo $(out_dir)
 	$(rtf_proc)
 
 # filter
-$(filtered_target): in = cv-multilingual.xml
-$(filtered_target): out = $(filtered_file)
+$(filtered_target): in = $<
+$(filtered_target): out = $@
 $(filtered_target): filter_targets = $* $(filters)
-$(filtered_target): $(tmp_dir) cv-multilingual.xml
+$(filtered_target): cv-multilingual.xml $(tmp_dir)
 	$(filter_proc)
 
 # copy CSS file
-$(out_dir)/style.css: $(out_dir) style.css
-	cp style.css $(out_dir)/style.css
+$(out_dir)/style.css: style.css $(out_dir)
+	cp $< $@
 
 folders:
 	mkdir -p $(folders)
@@ -191,7 +190,7 @@ list-fonts:
 
 # remove referees from xml
 $(out_dir)/cv.xml: cv-multilingual.xml deref.php
-	php deref.php cv-multilingual.xml out/cv.xml
+	php deref.php $< $@
 
 # copy online files to upload dir
 upload_files: $(upload_dir) $(upload_dir)/$(fn_en_pdf) $(upload_dir)/$(fn_fr_pdf) $(upload_dir)/$(fn_en_txt) $(upload_dir)/$(fn_fr_txt) $(upload_dir)/$(fn_en_html) $(upload_dir)/$(fn_fr_html) $(upload_dir)/Source\ CV.xml
