@@ -16,8 +16,6 @@ out_dir = out
 out_fonts_dir = $(out_dir)/fonts
 upload_dir = upload
 
-folders = $(out_dir) $(tmp_dir) $(upload_dir) $(out_fonts_dir)
-
 filters = abroad
 languages = fr en
 
@@ -32,7 +30,7 @@ in_fonts = $(wildcard $(in_fonts_dir)/*.eot $(in_fonts_dir)/*.svg $(in_fonts_dir
 # destination
 out_fonts = $(in_fonts:$(in_fonts_dir)/%=$(out_fonts_dir)/%)
 
-common_deps = folders $(theme)/common/*.xsl
+common_deps = $(theme)/common/*.xsl
 pdf_deps = $(common_deps) $(theme)/pdf/*.xsl
 html_deps = $(common_deps) $(theme)/html/*.xsl $(out_dir)/style.css $(out_fonts)
 text_deps = $(common_deps) $(theme)/text/*.xsl
@@ -173,8 +171,21 @@ $(rtf_target): $(fo_target) $(out_dir)
 $(out_dir)/style.css: style.css $(out_dir)
 	cp $< $@
 
-folders:
-	mkdir -p $(folders)
+# make out directory
+$(out_dir):
+	mkdir -p $(out_dir)
+
+# make tmp directory
+$(tmp_dir):
+	mkdir -p $(tmp_dir)
+
+# make upload directory
+$(upload_dir):
+	mkdir -p $(upload_dir)
+
+# make output fonts directory
+$(out_fonts_dir):
+	mkdir -p $(out_fonts_dir)
 
 # copy web fonts
 $(out_fonts_dir)/%: $(out_fonts_dir) $(in_fonts_dir)/%
