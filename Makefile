@@ -4,9 +4,11 @@ country = fr
 # Options: letter for country=us, a4 for others
 papersize = a4
 
-html_style = olivier/html/$(country)-html.xsl
-text_style = olivier/text/$(country)-text.xsl
-fo_style = olivier/pdf/$(country)-$(papersize).xsl
+theme = olivier
+
+html_style = $(theme)/html/$(country)-html.xsl
+text_style = $(theme)/text/$(country)-text.xsl
+fo_style = $(theme)/pdf/$(country)-$(papersize).xsl
 
 out_dir = out
 tmp_dir = tmp
@@ -20,10 +22,10 @@ in_fonts = $(wildcard $(in_fonts_dir)/*.eot $(in_fonts_dir)/*.svg $(in_fonts_dir
 out_fonts_dir = $(out_dir)/fonts
 out_fonts = $(patsubst $(in_fonts_dir)/%,$(out_fonts_dir)/%,$(in_fonts))
 
-common_deps = olivier/common/*.xsl
-pdf_deps = $(common_deps) olivier/pdf/*.xsl
-html_deps = $(common_deps) olivier/html/*.xsl $(out_dir)/style.css $(out_fonts)
-text_deps = $(common_deps) olivier/text/*.xsl
+common_deps = $(theme)/common/*.xsl
+pdf_deps = $(common_deps) $(theme)/pdf/*.xsl
+html_deps = $(common_deps) $(theme)/html/*.xsl $(out_dir)/style.css $(out_fonts)
+text_deps = $(common_deps) $(theme)/text/*.xsl
 
 # final names (online)
 fn_en_pdf = Olivier\ Scherler\ CV\ English.pdf
