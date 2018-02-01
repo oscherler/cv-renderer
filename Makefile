@@ -57,6 +57,7 @@ font_list_class = org.apache.fop.tools.fontlist.FontListMain
 # processors
 xsl_proc_xalan = $(java) $(xalan_class) $(xsl_flags) -in $(in) -xsl $(xsl) -out $(out) $(xsl_params)
 xsl_proc_saxon = $(java) $(saxon_class) $(xsl_flags) -o $(out) $(in) $(xsl) $(xsl_params)
+xsl_proc_xsltproc = xsltproc -o $(out) $(xsl_flags) $(xsl_params) $(xsl) $(in)
 
 pdf_proc_fop = $(FOP_HOME)/fop $(fo_flags) -fo $(in) -pdf $(out)
 pdf_proc_xep = ~/bin/xep/run.sh $(fo_flags) $(in) $(out)
@@ -82,7 +83,7 @@ xmllint = xmllint --format --output $(out) $(out)
 
 # processor selection
 
-xsl_proc = $(xsl_proc_xalan)
+xsl_proc = $(xsl_proc_xalan) # xsl_proc_xsltproc is faster, use later
 pdf_proc = $(pdf_proc_fop)
 rtf_proc = $(rtf_proc_xmlmind)
 
