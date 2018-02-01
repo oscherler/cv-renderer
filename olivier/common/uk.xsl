@@ -43,7 +43,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="page.word">page</xsl:param>
   
   <!-- Word to use for "Contact Information" -->
-  <xsl:param name="contact.word">Contact Information</xsl:param>
+  <xsl:param name="contact.word">Personal Details</xsl:param><!-- Contact Information -->
   <xsl:param name="objective.word">Professional Objective</xsl:param>
 
   <!-- Word to use for "Employment History" -->
@@ -111,7 +111,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="email.word">E-mail</xsl:param>
   <xsl:param name="url.word">Website</xsl:param>
 
-  <xsl:param name="contact.word">Personal Details</xsl:param>
   <xsl:param name="label.colon">:</xsl:param>
 
   <xsl:param name="achievements.word">Achievements</xsl:param>
