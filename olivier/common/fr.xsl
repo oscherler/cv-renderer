@@ -36,7 +36,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
-  <xsl:import href="../resume-1_5_1/xsl/country/fr.xsl"/>
+  <xsl:import href="../../resume-1_5_1/xsl/country/fr.xsl"/>
 
   <xsl:param name="resume.word">CV</xsl:param>
 

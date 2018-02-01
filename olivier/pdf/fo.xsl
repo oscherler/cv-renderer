@@ -37,13 +37,13 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     xmlns:fo="http://www.w3.org/1999/XSL/Format"
 	xmlns:x="http://olivier.ithink.ch/resume/extension/0.0">
 
-  <xsl:import href="../resume-1_5_1/xsl/format/fo.xsl"/>
+  <xsl:import href="../../resume-1_5_1/xsl/format/fo.xsl"/>
 
   <xsl:output method="xml" omit-xml-declaration="no" indent="yes"
     encoding="UTF-8"/>
   <xsl:strip-space elements="*"/>
 
-  <xsl:include href="params.xsl"/>
+  <xsl:include href="../common/params.xsl"/>
 
   <!-- Format the document. -->
   <xsl:template match="/">

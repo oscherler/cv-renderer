@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-olivier/uk-html.xsl by Olivier Scherler
-Convert XML Resume into HTML using UK terminology.
+olivier/fr-html.xsl by Olivier Scherler
+Convert XML Resume into HTML using French terminology.
 
-Based on uk-html.xsl Copyright (c) 2001 Sean Kelly
+Based on fr-html.xsl Copyright (c) 2001 Sean Kelly
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:import href="html.xsl"/>
-  <xsl:import href="uk.xsl"/>
+  <xsl:import href="../common/fr.xsl"/>
 
 </xsl:stylesheet>

@@ -35,6 +35,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:import href="text.xsl"/>
-  <xsl:import href="uk.xsl"/>
+  <xsl:import href="../common/uk.xsl"/>
 
 </xsl:stylesheet>

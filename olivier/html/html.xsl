@@ -37,11 +37,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   xmlns:x="http://olivier.ithink.ch/resume/extension/0.0"
   exclude-result-prefixes="r x">
 
-  <xsl:import href="../resume-1_5_1/xsl/format/html.xsl"/>
+  <xsl:import href="../../resume-1_5_1/xsl/format/html.xsl"/>
 
   <xsl:strip-space elements="*"/>
 
-  <xsl:include href="params.xsl"/>
+  <xsl:include href="../common/params.xsl"/>
 
   <xsl:output method="html" omit-xml-declaration="yes" indent="yes" encoding="UTF-8" 
    doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" 

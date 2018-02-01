@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-olivier/fr-a4.xsl by Olivier Scherler
-Convert XML Resume into FO(PDF) using French terminology and A4 paper.
+olivier/uk-html.xsl by Olivier Scherler
+Convert XML Resume into HTML using UK terminology.
 
-Based on fr-a4.xsl Copyright (c) 2001 Sean Kelly
+Based on uk-html.xsl Copyright (c) 2001 Sean Kelly
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,11 +34,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:import href="fo.xsl"/>
-  <xsl:import href="../resume-1_5_1/xsl/paper/a4.xsl"/>
-  <xsl:import href="fr.xsl"/>
-
-  <xsl:param name="margin.top">17mm</xsl:param>
-  <xsl:param name="margin.bottom">17mm</xsl:param>
+  <xsl:import href="html.xsl"/>
+  <xsl:import href="../common/uk.xsl"/>
 
 </xsl:stylesheet>

@@ -41,14 +41,14 @@ In general, each block is responsible for outputting a newline after itself.
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:x="http://olivier.ithink.ch/resume/extension/0.0">
 
-  <xsl:import href="../resume-1_5_1/xsl/format/text.xsl"/>
+  <xsl:import href="../../resume-1_5_1/xsl/format/text.xsl"/>
 
   <xsl:output method="text" omit-xml-declaration="yes" indent="no"
     encoding="UTF-8"/>
   <xsl:output doctype-public="-//W3C//DTD HTML 4.0//EN"/>
   <xsl:strip-space elements="*"/>
 
-  <xsl:include href="params.xsl"/>
+  <xsl:include href="../common/params.xsl"/>
 
   <!-- Format the referees -->
   <xsl:template match="r:referees">
