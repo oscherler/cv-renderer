@@ -1,11 +1,32 @@
-# Options: br de fr it nl uk us es
-country = fr
-
-# Options: letter for country=us, a4 for others
-papersize = a4
+### parameters ###
 
 cv = cv-multilingual.xml
 theme = olivier
+# options: letter for country=us, a4 for others
+papersize = a4
+languages = fr en
+filters = abroad
+
+# final names (online)
+fn_en_pdf = Olivier\ Scherler\ CV\ English.pdf
+fn_en_html = Olivier\ Scherler\ CV\ English.html
+fn_en_txt = Olivier\ Scherler\ CV\ English.txt
+fn_fr_pdf = Olivier\ Scherler\ CV\ Français.pdf
+fn_fr_html = Olivier\ Scherler\ CV\ Français.html
+fn_fr_txt = Olivier\ Scherler\ CV\ Français.txt
+
+# language mappings
+country_fr := fr
+language_label_fr := Français
+
+country_en := uk
+language_label_fr := English
+
+# default country
+# options: br de fr it nl uk us es
+country = fr
+
+### variables ###
 
 html_style = $(theme)/html/$(country)-html.xsl
 text_style = $(theme)/text/$(country)-text.xsl
@@ -15,13 +36,6 @@ tmp_dir = tmp
 out_dir = out
 out_fonts_dir = $(out_dir)/fonts
 upload_dir = upload
-
-filters = abroad
-languages = fr en
-
-# language to country mapping
-country_fr := fr
-country_en := uk
 
 # web fonts to copy to output
 # source
@@ -35,20 +49,9 @@ pdf_deps = $(common_deps) $(theme)/pdf/*.xsl
 html_deps = $(common_deps) $(theme)/html/*.xsl $(out_dir)/style.css $(out_fonts)
 text_deps = $(common_deps) $(theme)/text/*.xsl
 
-# final names (online)
-fn_en_pdf = Olivier\ Scherler\ CV\ English.pdf
-fn_en_html = Olivier\ Scherler\ CV\ English.html
-fn_en_txt = Olivier\ Scherler\ CV\ English.txt
-fn_fr_pdf = Olivier\ Scherler\ CV\ Français.pdf
-fn_fr_html = Olivier\ Scherler\ CV\ Français.html
-fn_fr_txt = Olivier\ Scherler\ CV\ Français.txt
-
 fo_flags = -c fop.xconf
 
-#------------------------------------------------------------------------------
-# Processing software
-#------------------------------------------------------------------------------
-make = make
+### processing ###
 
 # JAVA_HOME should be defined in the environment with `export JAVA_HOME=$(/usr/libexec/java_home)`
 # FOP_HOME = fop-1.1 # if not defined system-wide
@@ -105,9 +108,7 @@ xsl_proc = $(xsl_proc_xalan) # xsl_proc_xsltproc is faster, use later
 pdf_proc = $(pdf_proc_fop)
 rtf_proc = $(rtf_proc_xmlmind)
 
-#------------------------------------------------------------------------------
-# End configurable parameters
-#------------------------------------------------------------------------------
+### targets ###
 
 .PHONY: all html text pdf rtf clean list-fonts upload_files sync
 
