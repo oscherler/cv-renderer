@@ -10,19 +10,21 @@ html_style = $(theme)/html/$(country)-html.xsl
 text_style = $(theme)/text/$(country)-text.xsl
 fo_style = $(theme)/pdf/$(country)-$(papersize).xsl
 
-out_dir = out
 tmp_dir = tmp
+out_dir = out
+out_fonts_dir = $(out_dir)/fonts
 upload_dir = upload
+
+folders = $(out_dir) $(tmp_dir) $(upload_dir) $(out_fonts_dir)
 
 # web fonts to copy to output
 # source
 in_fonts_dir = Bergamo-Std-fontfacekit
 in_fonts = $(wildcard $(in_fonts_dir)/*.eot $(in_fonts_dir)/*.svg $(in_fonts_dir)/*.ttf $(in_fonts_dir)/*.woff)
 # destination
-out_fonts_dir = $(out_dir)/fonts
 out_fonts = $(in_fonts:$(in_fonts_dir)/%=$(out_fonts_dir)/%)
 
-common_deps = $(theme)/common/*.xsl
+common_deps = folders $(theme)/common/*.xsl
 pdf_deps = $(common_deps) $(theme)/pdf/*.xsl
 html_deps = $(common_deps) $(theme)/html/*.xsl $(out_dir)/style.css $(out_fonts)
 text_deps = $(common_deps) $(theme)/text/*.xsl
@@ -172,21 +174,8 @@ $(tmp_dir)/%-filtered.xml: $(tmp_dir) cv-multilingual.xml
 $(out_dir)/style.css: $(out_dir) style.css
 	cp style.css $(out_dir)/style.css
 
-# make out directory
-$(out_dir):
-	mkdir -p $(out_dir)
-
-# make tmp directory
-$(tmp_dir):
-	mkdir -p $(tmp_dir)
-
-# make upload directory
-$(upload_dir):
-	mkdir -p $(upload_dir)
-
-# make output fonts directory
-$(out_fonts_dir):
-	mkdir -p $(out_fonts_dir)
+folders:
+	mkdir -p $(folders)
 
 # copy web fonts
 $(out_fonts_dir)/%: $(out_fonts_dir) $(in_fonts_dir)/%
