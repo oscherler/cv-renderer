@@ -17,6 +17,13 @@ upload_dir = upload
 
 folders = $(out_dir) $(tmp_dir) $(upload_dir) $(out_fonts_dir)
 
+filters = abroad
+languages = fr en
+
+# language to country mapping
+country_fr := fr
+country_en := uk
+
 # web fonts to copy to output
 # source
 in_fonts_dir = Bergamo-Std-fontfacekit
@@ -78,7 +85,6 @@ rtf_proc_codeconsult = $(java) $(codeconsult_rtf_class) $(in) $(out)
 # "targets" attribute) are always included.  
 # Take a look at example2.xml and try changing the filter targets to get a 
 # feel for how the filter works.
-filter_targets = test
 filter_proc = $(java) $(filter_class) -in $(in) -out $(out) $(filter_targets)
 
 xmllint = xmllint --format --output $(out) $(out)
@@ -102,24 +108,10 @@ default: pdf
 all: html text pdf
 
 # formats
-html: $(out_dir)/cv-en.html $(out_dir)/cv-fr.html
-text: $(out_dir)/cv-en.txt $(out_dir)/cv-fr.txt
-pdf: $(out_dir)/cv-en.pdf $(out_dir)/cv-fr.pdf
-rtf: $(out_dir)/cv-en.rtf $(out_dir)/cv-fr.rtf
-
-# fr
-$(tmp_dir)/cv-en-filtered.xml: filter_targets = en abroad
-$(tmp_dir)/cv-en.fo: country = uk
-$(out_dir)/cv-en.pdf: country = uk
-$(out_dir)/cv-en.txt: country = uk
-$(out_dir)/cv-en.html: country = uk
-
-# en
-$(tmp_dir)/cv-fr-filtered.xml: filter_targets = fr abroad
-$(tmp_dir)/cv-fr.fo: country = fr
-$(out_dir)/cv-fr.pdf: country = fr
-$(out_dir)/cv-fr.txt: country = fr
-$(out_dir)/cv-fr.html: country = fr
+html: $(languages:%=$(out_dir)/cv-%.html)
+text: $(languages:%=$(out_dir)/cv-%.txt)
+pdf: $(languages:%=$(out_dir)/cv-%.pdf)
+rtf: $(languages:%=$(out_dir)/cv-%.rtf)
 
 clean: clean-cv-fr clean-cv-en
 
@@ -131,43 +123,55 @@ clean-%:
 	rm -f $(out_dir)/$*.rtf
 	rm -f $(tmp_dir)/$*-filtered.xml
 
+filtered_target = $(tmp_dir)/cv-%-filtered.xml
+filtered_file = $(tmp_dir)/cv-$*-filtered.xml
+html_target = $(out_dir)/cv-%.html
+txt_target = $(out_dir)/cv-%.txt
+fo_target = $(tmp_dir)/cv-%.fo
+pdf_target = $(out_dir)/%.pdf
+rtf_target = $(out_dir)/%.rtf
+
 # html
-$(out_dir)/%.html: in = $(tmp_dir)/$*-filtered.xml
-$(out_dir)/%.html: out = $(out_dir)/$*.html
-$(out_dir)/%.html: xsl = $(html_style)
-$(out_dir)/%.html: $(out_dir) $(tmp_dir)/%-filtered.xml $(html_deps)
+$(html_target): country = $(country_$*)
+$(html_target): in = $(filtered_file)
+$(html_target): out = $(out_dir)/cv-$*.html
+$(html_target): xsl = $(html_style)
+$(html_target): $(out_dir) $(tmp_dir)/cv-%-filtered.xml $(html_deps)
 	$(xsl_proc)
 
 # txt
-$(out_dir)/%.txt: in = $(tmp_dir)/$*-filtered.xml
-$(out_dir)/%.txt: out = $(out_dir)/$*.txt
-$(out_dir)/%.txt: xsl = $(text_style)
-$(out_dir)/%.txt: $(out_dir) $(tmp_dir)/%-filtered.xml $(text_deps)
+$(txt_target): country = $(country_$*)
+$(txt_target): in = $(filtered_file)
+$(txt_target): out = $(out_dir)/cv-$*.txt
+$(txt_target): xsl = $(text_style)
+$(txt_target): $(out_dir) $(tmp_dir)/cv-%-filtered.xml $(text_deps)
 	$(xsl_proc)
 
 # fo
-$(tmp_dir)/%.fo: in = $(tmp_dir)/$*-filtered.xml
-$(tmp_dir)/%.fo: out = $(tmp_dir)/$*.fo
-$(tmp_dir)/%.fo: xsl = $(fo_style)
-$(tmp_dir)/%.fo: $(tmp_dir)/%-filtered.xml $(pdf_deps)
+$(fo_target): country = $(country_$*)
+$(fo_target): in = $(filtered_file)
+$(fo_target): out = $(tmp_dir)/cv-$*.fo
+$(fo_target): xsl = $(fo_style)
+$(fo_target): $(tmp_dir)/cv-%-filtered.xml $(pdf_deps)
 	$(xsl_proc)
 
 # pdf
-$(out_dir)/%.pdf: in = $(tmp_dir)/$*.fo
-$(out_dir)/%.pdf: out = $(out_dir)/$*.pdf
-$(out_dir)/%.pdf: $(out_dir) $(tmp_dir)/%.fo
+$(pdf_target): in = $(tmp_dir)/$*.fo
+$(pdf_target): out = $(out_dir)/$*.pdf
+$(pdf_target): $(out_dir) $(tmp_dir)/%.fo
 	$(pdf_proc)
 
 # rtf
-$(out_dir)/%.rtf: in = $(tmp_dir)/$*.fo
-$(out_dir)/%.rtf: out = $(out_dir)/$*.rtf
-$(out_dir)/%.rtf: $(out_dir) $(tmp_dir)/%.fo
+$(rtf_target): in = $(tmp_dir)/$*.fo
+$(rtf_target): out = $(out_dir)/$*.rtf
+$(rtf_target): $(out_dir) $(tmp_dir)/%.fo
 	$(rtf_proc)
 
 # filter
-$(tmp_dir)/%-filtered.xml: in = cv-multilingual.xml
-$(tmp_dir)/%-filtered.xml: out = $(tmp_dir)/$*-filtered.xml
-$(tmp_dir)/%-filtered.xml: $(tmp_dir) cv-multilingual.xml
+$(filtered_target): in = cv-multilingual.xml
+$(filtered_target): out = $(filtered_file)
+$(filtered_target): filter_targets = $* $(filters)
+$(filtered_target): $(tmp_dir) cv-multilingual.xml
 	$(filter_proc)
 
 # copy CSS file
