@@ -42,22 +42,30 @@ fo_flags = -c fop.xconf
 #------------------------------------------------------------------------------
 make = make
 
-MY_FOP_HOME=fop-1.1
-MY_CLASSPATH=resume-1_5_1/java/xmlresume-filter.jar:$(FOP_HOME)/build/fop.jar:$(FOP_HOME)/lib/*:$(CLASSPATH)
+# JAVA_HOME should be defined in the environment with `export JAVA_HOME=$(/usr/libexec/java_home)`
+# FOP_HOME = fop-1.1 # if not defined system-wide
+local_classpath = resume-1_5_1/java/xmlresume-filter.jar:$(CLASSPATH)
+java = java -cp $(local_classpath)
 
-xsl_proc = java -cp $(MY_CLASSPATH) org.apache.xalan.xslt.Process $(xsl_flags) -in $(in) -xsl $(xsl) -out $(out)
-#xsl_proc = java -cp $(MY_CLASSPATH) com.icl.saxon.StyleSheet $(xsl_flags) -o $(out) $(in) $(xsl) $(xsl_params)
+xalan_class = org.apache.xalan.xslt.Process
+saxon_class = com.icl.saxon.StyleSheet
+xmlmind_rtf_class = com.xmlmind.fo.converter.Driver
+codeconsult_rtf_class = ch.codeconsult.jfor.main.CmdLineConverter
+filter_class = net.sourceforge.xmlresume.filter.Filter
+font_list_class = org.apache.fop.tools.fontlist.FontListMain
 
-xmllint = xmllint --format --output $(out) $(out)
+# processors
+xsl_proc_xalan = $(java) $(xalan_class) $(xsl_flags) -in $(in) -xsl $(xsl) -out $(out) $(xsl_params)
+xsl_proc_saxon = $(java) $(saxon_class) $(xsl_flags) -o $(out) $(in) $(xsl) $(xsl_params)
 
-pdf_proc = $(FOP_HOME)/fop $(fo_flags) -fo $(in) -pdf $(out)
-#pdf_proc = ~/bin/xep/run.sh $(fo_flags) $(in) $(out)
+pdf_proc_fop = $(FOP_HOME)/fop $(fo_flags) -fo $(in) -pdf $(out)
+pdf_proc_xep = ~/bin/xep/run.sh $(fo_flags) $(in) $(out)
 
 # RTF generation currently requires you download a separate, closed source jar 
 # file and add it to your java classpath: 	
 # http://www.xmlmind.com/foconverter/downloadperso.shtml
-rtf_proc = java -cp $(MY_CLASSPATH) com.xmlmind.fo.converter.Driver $(in) $(out)
-#rtf_proc = java -cp $(MY_CLASSPATH) ch.codeconsult.jfor.main.CmdLineConverter $(in) $(out)
+rtf_proc_xmlmind = $(java) $(xmlmind_rtf_class) $(in) $(out)
+rtf_proc_codeconsult = $(java) $(codeconsult_rtf_class) $(in) $(out)
 
 # Element filtering allows you to create targeted resumes.  
 # You can create your own targets; just specify them in your resume.xml 
@@ -68,7 +76,15 @@ rtf_proc = java -cp $(MY_CLASSPATH) com.xmlmind.fo.converter.Driver $(in) $(out)
 # Take a look at example2.xml and try changing the filter targets to get a 
 # feel for how the filter works.
 filter_targets = test
-filter_proc = java -cp $(MY_CLASSPATH) net.sourceforge.xmlresume.filter.Filter -in $(in) -out $(out) $(filter_targets)
+filter_proc = $(java) $(filter_class) -in $(in) -out $(out) $(filter_targets)
+
+xmllint = xmllint --format --output $(out) $(out)
+
+# processor selection
+
+xsl_proc = $(xsl_proc_xalan)
+pdf_proc = $(pdf_proc_fop)
+rtf_proc = $(rtf_proc_xmlmind)
 
 #------------------------------------------------------------------------------
 # End configurable parameters
@@ -177,7 +193,7 @@ $(out_fonts_dir)/%: $(out_fonts_dir) $(in_fonts_dir)/%
 
 # list fonts available to FOP
 list-fonts:
-	java -cp $(MY_CLASSPATH) org.apache.fop.tools.fontlist.FontListMain -c fop.xconf
+	$(java) $(font_list_class) -c fop.xconf
 
 # remove referees from xml
 $(out_dir)/cv.xml: cv-multilingual.xml deref.php
