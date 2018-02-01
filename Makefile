@@ -4,6 +4,7 @@ country = fr
 # Options: letter for country=us, a4 for others
 papersize = a4
 
+cv = cv-multilingual.xml
 theme = olivier
 
 html_style = $(theme)/html/$(country)-html.xsl
@@ -64,18 +65,26 @@ filter_class = net.sourceforge.xmlresume.filter.Filter
 font_list_class = org.apache.fop.tools.fontlist.FontListMain
 
 # processors
-xsl_proc_xalan = $(java) $(xalan_class) $(xsl_flags) -in $(in) -xsl $(xsl) -out $(out) $(xsl_params)
-xsl_proc_saxon = $(java) $(saxon_class) $(xsl_flags) -o $(out) $(in) $(xsl) $(xsl_params)
-xsl_proc_xsltproc = xsltproc -o $(out) $(xsl_flags) $(xsl_params) $(xsl) $(in)
+# $(call xsl_proc_xalan,xsl,in,out,xsl_params)
+xsl_proc_xalan = $(java) $(xalan_class) $(5) -in $(2) -xsl $(1) -out $(3) $(xsl_flags)
+# $(call xsl_proc_saxon,xsl,in,out,xsl_params)
+xsl_proc_saxon = $(java) $(saxon_class) $(5) -o $(3) $(2) $1 $(xsl_flags)
+# $(call xsl_proc_saxon,xsl,in,out,xsl_params)
+xsl_proc_xsltproc = xsltproc -o $(3) $(5) $(xsl_flags) $(1) $(2)
 
-pdf_proc_fop = $(FOP_HOME)/fop $(fo_flags) -fo $(in) -pdf $(out)
-pdf_proc_xep = ~/bin/xep/run.sh $(fo_flags) $(in) $(out)
+# $(call pdf_proc_fop,in,out)
+pdf_proc_fop = $(FOP_HOME)/fop $(fo_flags) -fo $(1) -pdf $(2)
+# $(call pdf_proc_xep,in,out)
+pdf_proc_xep = ~/bin/xep/run.sh $(fo_flags) $(1) $(2)
 
 # RTF generation currently requires you download a separate, closed source jar 
 # file and add it to your java classpath: 	
 # http://www.xmlmind.com/foconverter/downloadperso.shtml
-rtf_proc_xmlmind = $(java) $(xmlmind_rtf_class) $(in) $(out)
-rtf_proc_codeconsult = $(java) $(codeconsult_rtf_class) $(in) $(out)
+
+# $(call rtf_proc_xmlmind,in,out)
+rtf_proc_xmlmind = $(java) $(xmlmind_rtf_class) $(1) $(2)
+# $(call rtf_proc_codeconsult,in,out)
+rtf_proc_codeconsult = $(java) $(codeconsult_rtf_class) $(1) $(2)
 
 # Element filtering allows you to create targeted resumes.  
 # You can create your own targets; just specify them in your resume.xml 
@@ -85,9 +94,12 @@ rtf_proc_codeconsult = $(java) $(codeconsult_rtf_class) $(in) $(out)
 # "targets" attribute) are always included.  
 # Take a look at example2.xml and try changing the filter targets to get a 
 # feel for how the filter works.
-filter_proc = $(java) $(filter_class) -in $(in) -out $(out) $(filter_targets)
 
-xmllint = xmllint --format --output $(out) $(out)
+# $(call filter_proc,in,out,filter_targets)
+filter_proc = $(java) $(filter_class) -in $(1) -out $(2) $(3)
+
+# $(call xmllint,in,out)
+xmllint = xmllint --format --output $(2) $(1)
 
 # processor selection
 
@@ -131,47 +143,31 @@ pdf_target = $(out_dir)/cv-%.pdf
 rtf_target = $(out_dir)/cv-%.rtf
 
 # filter
-$(filtered_target): filter_targets = $* $(filters)
-$(filtered_target): in = $<
-$(filtered_target): out = $@
-$(filtered_target): cv-multilingual.xml $(tmp_dir)
-	$(filter_proc)
+$(filtered_target): $(cv) $(tmp_dir)
+	$(call filter_proc,$<,$@,$* $(filters))
 
 # html
 $(html_target): country = $(country_$*)
-$(html_target): xsl = $(html_style)
-$(html_target): in = $<
-$(html_target): out = $@
 $(html_target): $(filtered_target) $(out_dir) $(html_deps)
-	$(xsl_proc)
+	$(call xsl_proc,$(html_style),$<,$@)
 
 # txt
 $(txt_target): country = $(country_$*)
-$(txt_target): xsl = $(text_style)
-$(txt_target): in = $<
-$(txt_target): out = $@
 $(txt_target): $(filtered_target) $(out_dir) $(text_deps)
-	$(xsl_proc)
+	$(call xsl_proc,$(text_style),$<,$@)
 
 # fo
 $(fo_target): country = $(country_$*)
-$(fo_target): xsl = $(fo_style)
-$(fo_target): in = $<
-$(fo_target): out = $@
 $(fo_target): $(filtered_target) $(pdf_deps)
-	$(xsl_proc)
+	$(call xsl_proc,$(fo_style),$<,$@)
 
 # pdf
-$(pdf_target): in = $<
-$(pdf_target): out = $@
 $(pdf_target): $(fo_target) $(out_dir)
-	$(pdf_proc)
+	$(call pdf_proc,$<,$@)
 
 # rtf
-$(rtf_target): in = $<
-$(rtf_target): out = $@
 $(rtf_target): $(fo_target) $(out_dir)
-	$(rtf_proc)
+	$(call rtf_proc,in,out)
 
 # copy CSS file
 $(out_dir)/style.css: style.css $(out_dir)
@@ -189,7 +185,7 @@ list-fonts:
 	$(java) $(font_list_class) -c fop.xconf
 
 # remove referees from xml
-$(out_dir)/cv.xml: cv-multilingual.xml deref.php
+$(out_dir)/cv.xml: $(cv) deref.php
 	php deref.php $< $@
 
 # copy online files to upload dir
