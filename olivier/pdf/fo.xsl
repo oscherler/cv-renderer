@@ -269,7 +269,14 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:template match="r:contact/r:url" mode="label">
     <xsl:call-template name="contact-label">
       <xsl:with-param name="label">
-        <xsl:value-of select="$url.word"/>
+        <xsl:choose>
+          <xsl:when test="@x:label">
+            <xsl:value-of select="@x:label"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$url.word"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>

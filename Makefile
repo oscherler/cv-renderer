@@ -5,7 +5,7 @@ theme = olivier
 # options: letter for country=us, a4 for others
 papersize = a4
 languages = fr en
-filters = abroad
+filters = abroad linkedin
 
 # final names (online)
 fn_en_pdf = Olivier\ Scherler\ CV\ English.pdf

@@ -50,6 +50,19 @@ In general, each block is responsible for outputting a newline after itself.
 
   <xsl:include href="../common/params.xsl"/>
 
+  <xsl:template match="r:contact/r:url">
+    <xsl:choose>
+      <xsl:when test="@x:label">
+        <xsl:value-of select="@x:label"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$url.word"/>
+      </xsl:otherwise>
+    </xsl:choose><xsl:text>: </xsl:text>
+    <xsl:apply-templates/>
+    <xsl:call-template name="NewLine"/>
+  </xsl:template>
+
   <!-- Objective, with level 2 heading. -->
   <xsl:template match="r:objective">
     <xsl:if test="$objective.heading.display = 1">
