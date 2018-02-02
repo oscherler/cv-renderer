@@ -50,6 +50,22 @@ In general, each block is responsible for outputting a newline after itself.
 
   <xsl:include href="../common/params.xsl"/>
 
+  <!-- Objective, with level 2 heading. -->
+  <xsl:template match="r:objective">
+    <xsl:if test="$objective.heading.display = 1">
+      <xsl:call-template name="Heading">
+        <xsl:with-param name="Text" select="$objective.word"/>
+      </xsl:call-template>
+    </xsl:if>
+
+    <xsl:call-template name="NewLine"/>
+    <xsl:call-template name="Indent">
+      <xsl:with-param name="Text">
+        <xsl:apply-templates/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
   <!-- Format the referees -->
   <xsl:template match="r:referees">
     <xsl:call-template name="Heading">

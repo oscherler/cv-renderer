@@ -210,6 +210,20 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsl:call-template>
   </xsl:template>
 
+<!-- Objective, with level 2 heading. -->
+  <xsl:template match="r:objective">
+    <xsl:if test="$objective.heading.display = 1">
+      <xsl:call-template name="Heading">
+        <xsl:with-param name="Text">
+          <xsl:value-of select="$objective.word"/>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+    <div class="objective" style="font-weight: {$objective.font.weight};">
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+
   <!-- Format a period. -->
   <xsl:template match="r:period">
     <xsl:apply-templates select="r:from"/> – <xsl:apply-templates select="r:to"/>

@@ -250,4 +250,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xsl:param name="skillset.space">0pt</xsl:param>
 
+  <!-- Should objective heading be displayed? -->
+  <xsl:param name="objective.heading.display">0</xsl:param>
+  <xsl:param name="objective.font.weight">bold</xsl:param>
+
 </xsl:stylesheet>

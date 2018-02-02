@@ -145,6 +145,19 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	</fo:table>
   </xsl:template>
 
+  <!-- Format the objective with the heading "Professional Objective." -->
+  <xsl:template match="r:objective">
+    <xsl:if test="$objective.heading.display = 1">
+      <xsl:call-template name="heading">
+        <xsl:with-param name="text"><xsl:value-of select="$objective.word"/></xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+    <fo:block
+        font-weight="{$objective.font.weight}">
+      <xsl:apply-templates/>
+    </fo:block>
+  </xsl:template>
+
   <!-- Format a period. -->
   <xsl:template match="r:period">
     <xsl:apply-templates select="r:from"/> – <xsl:apply-templates select="r:to"/>
