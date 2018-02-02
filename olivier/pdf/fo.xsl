@@ -106,10 +106,10 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsl:call-template>
 
 	<fo:table table-layout="fixed" width="17cm" space-after="32pt">
-	  <fo:table-column column-width="4.0cm"/>
-	  <fo:table-column column-width="5.5cm"/>
-	  <fo:table-column column-width="3.0cm"/>
-	  <fo:table-column column-width="4.5cm"/>
+	  <fo:table-column column-width="{$header.left_column.label.width}"/>
+	  <fo:table-column column-width="{$header.left_column.content.width}"/>
+	  <fo:table-column column-width="{$header.right_column.label.width}"/>
+	  <fo:table-column column-width="{$header.right_column.content.width}"/>
 	  <fo:table-body>
 		<fo:table-row>
 		  <fo:table-cell padding-bottom="6pt">

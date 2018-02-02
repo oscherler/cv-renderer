@@ -254,4 +254,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsl:param name="objective.heading.display">0</xsl:param>
   <xsl:param name="objective.font.weight">bold</xsl:param>
 
+  <xsl:param name="header.left_column.label.width">3.5cm</xsl:param>
+  <xsl:param name="header.left_column.content.width">5.0cm</xsl:param>
+  <xsl:param name="header.right_column.label.width">3.5cm</xsl:param>
+  <xsl:param name="header.right_column.content.width">5.0cm</xsl:param>
+
 </xsl:stylesheet>
