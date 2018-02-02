@@ -242,8 +242,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xsl:param name="superscript.size">7pt</xsl:param>
 
-  <xsl:param name="job.list.indent">1.3cm</xsl:param>
-  <xsl:param name="project.list.indent">1.5cm</xsl:param>
+  <xsl:param name="job.list.indent">0.6cm</xsl:param>
+  <xsl:param name="project.list.indent">0.8cm</xsl:param>
 
   <xsl:param name="project.title.font.style">normal</xsl:param>
   <xsl:param name="project.title.font.weight" select="$global.bold.weight"/>
